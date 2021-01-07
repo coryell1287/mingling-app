@@ -6,76 +6,10 @@ node_js:
   services:
     - docker
 
-_test_job: &test_job
-  before_install:
-    - npx run audit-ci -h -c
-    - npm run test:runner
-    - npm run build
-
-_deploy_job: &deploy_job
-  script:
-    - chmod +x deploy.sh
-    - bash deploy.sh
-  deploy:
-    before_deploy: echo "Preparing to deploy to $ENV"
-    after_deploy: echo "Successfully deployed to $ENV"
-
-_notifications: &_notifications
-    slack: creativecoden:CFr7AFcXs0ukJ8zEBCLirYs4
-      on_pull_requests: false
-      on_success: always
-      template:
-      - "%{repository_slug} (%{commit}) : %{message}"
-      - "Build details: %{build_url}"
-      - "https://media2.giphy.com/media/zua937O8cpu6s/giphy.gif"
-
-_staging_env: &staging_env
-  - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID_STAGING}
-  - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY_STAGING}
-  - AWS_IMAGE_REPO_URL=${AWS_IMAGE_REPO_URL_STAGING}
-  - AWS_SERVICE_NAME=${AWS_SERVICE_NAME_STAGING}
-  - AWS_CLUSTER_NAME=${AWS_CLUSTER_NAME_STAGING}
-  - AWS_IMAGE_TAG=${AWS_IMAGE_TAG_STAGING}
-
-_uat_env: &uat_env
-  - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID_UAT}
-  - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY_UAT}
-  - AWS_IMAGE_REPO_URL=${AWS_IMAGE_REPO_URL_UAT}
-  - AWS_SERVICE_NAME=${AWS_SERVICE_NAME_UAT}
-  - AWS_CLUSTER_NAME=${AWS_CLUSTER_NAME_UAT}
-  - AWS_IMAGE_TAG=${AWS_IMAGE_TAG_UAT}
-
-_production_env: &production_env
-  - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID_PRODUCTION}
-  - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY_PRODUCTION}
-  - AWS_IMAGE_REPO_URL=${AWS_IMAGE_REPO_URL_PRODUCTION}
-  - AWS_SERVICE_NAME=${AWS_SERVICE_NAME_PRODUCTION}
-  - AWS_CLUSTER_NAME=${AWS_CLUSTER_NAME_PRODUCTION}
-  - AWS_IMAGE_TAG=${AWS_IMAGE_TAG_PRODUCTION}
-
 jobs:
   include:
   - name: "Deploy to staging"
     if: (type = push OR type = pull_request) AND branch = staging
     env:
-      - <<: *staging_env
-    <<: *test_job
-    <<: *deploy_job
-    <<: *notifications
+    
     notifications:
-    <<: *notifications
-  - name: "Deploy to uat"
-    if: (type = push OR type = pull_request) AND branch = uat
-    env:
-      - <<: *uat_env
-    <<: *test_job
-    <<: *deploy_job
-    notifications:
-    <<: *notifications
-  - name: "Deploy to production"
-    if: (type = push OR type = pull_request) AND branch = master
-    env:
-      - <<: *production_env
-    <<: *test_job
-    notifications:
-    <<: *notifications
