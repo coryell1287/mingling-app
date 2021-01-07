@@ -1,0 +1,172 @@
+{
+  "name": "mingling-app_client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --progress --config ./shared/tooling/webpack.prod.js",
+    "compile-schemas": "$(npm bin)/json2ts -i server/**/schemas/*.json -o ./types",
+    "coverage": "$(npm bin)/nyc report --reporter=lcov --reporter=text",
+    "dev": "webpack serve --progress --config ./shared/tooling/webpack.dev.js",
+    "inspect:all": "concurrently -c \"bgBlue.bold,bgMagenta.bold,yellow\" \"npm:inspect:lint\" \"npm:inspect:updates\" \"npm:inspect:license\"",
+    "inspect:license": "$(npm bin)/license-checker --production --json --out ./artifacts/license.json --failOn GPLv2",
+    "inspect:lint": "$(npm bin)/eslint --ext .ts,.js --format table",
+    "inspect:sanity-testing": "npm run test:runner -- --env grep=@sanity",
+    "inspect:updates": "$(npm bin)/npm-check",
+    "offline": "http-server dist",
+    "pwa:assets": "$(npm bin)/pwa-asset-generator -i ./src/index.html -m ./src/manifest.webmanifest",
+    "test:coverage": "npm run test:runner && npm run coverage",
+    "test:e2e": "$(npm bin)/cypress open --config-file ./shared/config/cypress.json",
+    "test:runner": "$(npm bin)/cypress run --config-file ./shared/config/cypress-unit.json",
+    "test:unit": "$(npm bin)/cypress open --config-file ./shared/config/cypress-unit.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coryell1287/mingling-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coryell1287/mingling-app/issues"
+  },
+  "homepage": "https://github.com/coryell1287/mingling-app#readme",
+  "browserslist": {
+    "production": [
+      ">= 0.5%",
+      "not dead",
+      "not op_mini all",
+      "last 2 major versions",
+      "Chrome >= 60",
+      "Firefox >= 60",
+      "not Edge < 79",
+      "Firefox ESR",
+      "iOS >= 10",
+      "Safari >= 10",
+      "Android >= 6",
+      "not Explorer <= 11"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true
+  },
+  "lint-staged": {
+    "*.css": [
+      "npx prettier --write",
+      "npx stylelint --fix"
+    ],
+    "*.{js,tsx,ts}": [
+      "npm run lint",
+      "npx prettier --write"
+    ],
+    "*.{json,md}": [
+      "npx prettier --write"
+    ],
+    "husky": {
+      "hooks": {
+        "pre-commit": "lint-staged",
+        "pre-push": "npm run inspect:all"
+      }
+    }
+  },
+  "nyc": {
+    "report-dir": "artifacts"
+  },
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-bootstrap": "^1.4.0",
+    "react-dom": "^17.0.1",
+    "react-helmet": "^6.1.0",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@cypress/code-coverage": "^3.9.0",
+    "@cypress/webpack-preprocessor": "^5.5.0",
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
+    "@types/chai": "^4.2.14",
+    "@types/cypress": "^1.1.3",
+    "@types/cypress-cucumber-preprocessor": "^4.0.0",
+    "@types/mocha": "^8.2.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-helmet": "^6.1.0",
+    "@types/react-router": "^5.1.10",
+    "@types/react-router-dom": "^5.1.7",
+    "@typescript-eslint/eslint-plugin": "^4.12.0",
+    "@typescript-eslint/parser": "^4.12.0",
+    "babel-loader": "^8.2.2",
+    "browser-sync": "^2.26.13",
+    "clean-webpack-plugin": "^3.0.0",
+    "concurrently": "^5.3.0",
+    "copy-webpack-plugin": "^7.0.0",
+    "cross-env": "^7.0.3",
+    "css-loader": "^5.0.1",
+    "css-modules-typescript-loader": "^4.0.1",
+    "cypress": "^6.2.1",
+    "cypress-audit": "^0.3.0",
+    "cypress-cucumber-preprocessor": "^4.0.0",
+    "cypress-react-unit-test": "^4.17.2",
+    "cypress-select-tests": "^1.5.9",
+    "cypress-watch-and-reload": "^1.3.1",
+    "depcheck": "^1.3.1",
+    "eslint": "^7.17.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-plugin-chai-friendly": "^0.6.0",
+    "eslint-plugin-compat": "^3.9.0",
+    "eslint-plugin-cypress": "^2.11.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-security": "^1.4.0",
+    "eslint-plugin-sonarjs": "^0.5.0",
+    "html-webpack-plugin": "^4.5.1",
+    "http-server": "^0.12.3",
+    "husky": "^4.3.6",
+    "imagemin-webp": "^6.0.0",
+    "imagemin-webpack-plugin": "^2.4.2",
+    "json-schema-to-typescript": "^10.1.1",
+    "license-checker": "^25.0.1",
+    "lint-staged": "^10.5.3",
+    "npm-check": "^5.9.2",
+    "nyc": "^15.1.0",
+    "path-browserify": "^1.0.1",
+    "postcss-loader": "^4.1.0",
+    "postcss-preset-env": "^6.7.0",
+    "prettier": "^2.2.1",
+    "pwa-asset-generator": "^4.1.0",
+    "rimraf": "^3.0.2",
+    "source-map-support": "^0.5.19",
+    "strip-ansi": "^6.0.0",
+    "style-loader": "^2.0.0",
+    "stylelint": "^13.8.0",
+    "stylelint-config-css-modules": "^2.2.0",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-recommended": "^3.0.0",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-order": "^4.1.0",
+    "stylelint-prettier": "^1.1.2",
+    "ts-loader": "^8.0.14",
+    "type-fest": "^0.20.2",
+    "typescript": "^4.1.3",
+    "typescript-plugin-css-modules": "^3.0.1",
+    "webpack": "^5.11.1",
+    "webpack-bundle-analyzer": "^4.3.0",
+    "webpack-cli": "^4.3.1",
+    "webpack-dev-middleware": "^4.0.2",
+    "webpack-dev-server": "^3.11.1",
+    "webpack-manifest-plugin": "^3.0.0",
+    "webpack-merge": "^5.7.3",
+    "webpack-nano": "^1.1.1",
+    "workbox-webpack-plugin": "^6.0.2"
+  }
+}
