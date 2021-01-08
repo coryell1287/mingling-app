@@ -1,23 +1,24 @@
-version: 2.1
+jobs:
+  test:
+    executor:
+      name: node/default
+      tag: '14.15'
+    steps:
+      - checkout
+      - node/install-packages
+      - run:
+          command: npx audit-ci -h -c
+      - run:
+          command: npm ci
+      - run:
+          command: npm run test
 orbs:
   node: circleci/node@4.1.0
-  jobs:
-   run_tests:
-      steps:
-        - checkout
-        - run:
-            name: clean install
-            command: |
-              npm ci
-        - run:
-            name: run audit
-            command: |
-              npx audit-ci -h -c
-        - run:
-             name: run test suite
-             command: |
-              npm run test:runner
+version: 2.1
 workflows:
-  build_test:
+  test_my_app:
     jobs:
-      - run_tests
+      - test:
+          filters:
+            branches:
+              only: staging
