@@ -15,6 +15,7 @@
     "inspect:updates": "$(npm bin)/npm-check",
     "offline": "http-server dist",
     "pwa:assets": "$(npm bin)/pwa-asset-generator -i ./src/index.html -m ./src/manifest.webmanifest",
+    "test": "npx start-server-and-test start http-get://localhost:3030 npm run test:runner",
     "test:coverage": "npm run test:runner && npm run coverage",
     "test:e2e": "$(npm bin)/cypress open --config-file ./shared/config/cypress.json",
     "test:runner": "$(npm bin)/cypress run --config-file ./shared/config/cypress-unit.json",
