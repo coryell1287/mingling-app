@@ -1,0 +1,23 @@
+version: 2.1
+orbs:
+  node: circleci/node:14
+   jobs:
+      run_tests:
+      steps:
+        - checkout
+        - run:
+            name: clean install
+            command: |
+              npm ci
+        - run:
+            name: run audit
+            command: |
+              npx audit-ci -h -c
+        - run:
+             name: run test suite
+             command: |
+              npm run test:runner
+workflows:
+  build_test:
+    jobs:
+      - run_tests
