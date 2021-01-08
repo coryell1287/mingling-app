@@ -12,6 +12,8 @@ jobs:
           command: npm ci
       - run:
           command: npm run build
+      - run:
+          command: echo $AWS_ECR_ACCOUNT_URL
 orbs:
   node: circleci/node@4.1.0
   aws-ecr: circleci/aws-ecr@6.2.0
@@ -25,7 +27,7 @@ workflows:
             branches:
               only: staging
   deploy_aws:
-    jobs: 
+    jobs:
       - aws-ecr/build-and-push-image:
           account-url: AWS_ECR_ACCOUNT_URL
           aws-access-key-id: AWS_ACCESS_KEY_ID
@@ -44,10 +46,10 @@ workflows:
             - aws-ecr/build-and-push-image
           filters:
              branches:
-                 only: staging 
+                 only: staging
           aws-region: AWS_DEFAULT_REGION
           family: '${AWS_RESOURCE_NAME_PREFIX}-service'
           cluster-name: '${AWS_RESOURCE_NAME_PREFIX}-cluster'
-          container-image-name-updates: 'container=${AWS_RESOURCE_NAME_PREFIX}-service,tag=${CIRCLE_SHA1}'   
-        
-                                      
+          container-image-name-updates: 'container=${AWS_RESOURCE_NAME_PREFIX}-service,tag=${CIRCLE_SHA1}'
+
+
