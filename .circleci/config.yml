@@ -11,9 +11,11 @@ jobs:
       - run:
           command: npm ci
       - run:
-          command: npm run test
+          command: npm run test:runner
+  shellcheck:
 orbs:
   node: circleci/node@4.1.0
+  shellcheck: circleci/shellcheck@2.2.2
 version: 2.1
 workflows:
   test_my_app:
@@ -22,3 +24,7 @@ workflows:
           filters:
             branches:
               only: staging
+      - shellcheck/check:
+          dir: ./deploy.sh
+          requires: - test
+
