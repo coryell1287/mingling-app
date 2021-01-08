@@ -3,6 +3,9 @@ orbs:
   node: circleci/node:14
    jobs:
       run_tests:
+        filters:
+            branches:
+              only: staging
       steps:
         - checkout
         - run:
