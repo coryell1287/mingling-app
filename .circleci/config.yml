@@ -14,7 +14,8 @@ jobs:
           command: npm run build
 orbs:
   node: circleci/node@4.1.0
-  shellcheck: circleci/shellcheck@2.2.2
+  aws-ecr: circleci/aws-ecr@6.2.0
+  aws-ecs: circleci/aws-ecs@0.0.11
 version: 2.1
 workflows:
   run_tests:
@@ -23,6 +24,30 @@ workflows:
           filters:
             branches:
               only: staging
-      - shellcheck/check:
-          dir: ./deploy.sh
+      - aws-ecr/build-and-push-image:
+          account-url: AWS_ECR_ACCOUNT_URL
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          create-repo: true
+          # Name of dockerfile to use. Defaults to Dockerfile.
+          dockerfile: Dockerfile
+          # AWS_REGION_ENV_VAR_NAME
+          region: AWS_DEFAULT_REGION
+          # myECRRepository
+          repo: '${AWS_RESOURCE_NAME_PREFIX}'
+          # myECRRepoTag
+          tag: "$CIRCLE_SHA1"
+            filters:
+              branches:
+                only: staging
+      - aws-ecs/deploy-service-update:
+          requires:
+            - aws-ecr/build-and-push-image
+          aws-region: AWS_DEFAULT_REGION
+          family: '${AWS_RESOURCE_NAME_PREFIX}-service'
+          cluster-name: '${AWS_RESOURCE_NAME_PREFIX}-cluster'
+          container-image-name-updates: 'container=${AWS_RESOURCE_NAME_PREFIX}-service,tag=${CIRCLE_SHA1}'
+              filters:
+                branches:
+                  only: staging
 
