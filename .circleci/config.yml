@@ -13,7 +13,7 @@ jobs:
       - run:
           command: npm run build
       - run:
-          command: echo $AWS_ECR_ACCOUNT_URL
+          command: echo "$AWS_ECR_ACCOUNT_URL"
 orbs:
   node: circleci/node@4.1.0
   aws-ecr: circleci/aws-ecr@6.2.0
