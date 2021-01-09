@@ -12,18 +12,7 @@ jobs:
           command: npm ci
       - run:
           command: npm run build
-  deploy:
-    machine: true
-    working_directory: ~/app
-    steps:
-      - checkout
-      - run:
-          command: |
-            if [ "${CIRCLE_BRANCH}" = "staging" ]; then
-                echo "${AWS_ACCESS_KEY_ID}"
-                chmod +x ~/app/deploy.sh
-                ~/app/deploy.sh
-            fi
+
 orbs:
   node: circleci/node@4.1.0
   aws-ecr: circleci/aws-ecr@6.2.0
@@ -36,9 +25,17 @@ workflows:
           filters:
             branches:
               only: staging
-      - deploy:
+      - aws-ecr/build-and-push-image:
+          account-url: AWS_ECR_ACCOUNT_URL
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          create-repo: true
+          dockerfile: Dockerfile
+          region: AWS_DEFAULT_REGION
+          repo: '${AWS_RESOURCE_NAME_PREFIX}'
+          tag: "$CIRCLE_SHA1"
+          requires:
+            - test
           filters:
              branches:
                  only: staging
-          requires:
-             - test
