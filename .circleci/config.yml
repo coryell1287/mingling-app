@@ -2,7 +2,7 @@ jobs:
   test:
     executor:
       name: node/default
-      tag: 14.15
+      tag: '14.15'
     steps:
       - checkout
       - node/install-packages
@@ -12,6 +12,24 @@ jobs:
           command: npm ci --production
       - run:
           command: npm run build
+
+
+job_template: &job_template
+  account-url: AWS_ECR_ACCOUNT_URL
+  aws-access-key-id: AWS_ACCESS_KEY_ID
+  aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+  dockerfile: Dockerfile
+  no-output-timeout: 20m
+  region: AWS_DEFAULT_REGION
+  repo: $AWS_RESOURCE_NAME_PREFIX
+  skip-when-tags-exist: false
+  attach-workspace: true
+  tag: 'latest'
+  requires:
+    - test
+  filters:
+      branches:
+          only: staging
 
 orbs:
   node: circleci/node@4.1.0
@@ -28,17 +46,4 @@ workflows:
               only: staging
       - aws-ecr/build-and-push-image:
           context: staging
-          account-url: AWS_ECR_ACCOUNT_URL
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          dockerfile: Dockerfile
-          no-output-timeout: 20m
-          attach-workspace: true
-          region: AWS_DEFAULT_REGION
-          repo: $AWS_RESOURCE_NAME_PREFIX
-          tag: 'latest'
-          requires:
-            - test
-          filters:
-             branches:
-                 only: staging
+          <<: *job_template
