@@ -30,7 +30,7 @@ job_template: &job_template
   account-url: AWS_ECR_ACCOUNT_URL
   aws-access-key-id: AWS_ACCESS_KEY_ID
   aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-  dockerfile: app/Dockerfile
+  dockerfile: $PWD/Dockerfile
   no-output-timeout: 20m
   workspace-root: workspace
   region: AWS_DEFAULT_REGION
