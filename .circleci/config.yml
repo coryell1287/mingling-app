@@ -48,6 +48,7 @@ job_template: &job_template
 orbs:
   node: circleci/node@4.1.0
   aws-ecr: circleci/aws-ecr@6.15.2
+  orb-tools: circleci/orb-tools@9.0
 version: 2.1
 workflows:
   run_tests:
