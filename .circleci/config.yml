@@ -14,7 +14,7 @@ jobs:
       - run:
           command: npm run build
       - run:
-          command: find . -name dist
+          command: echo $PWD
 
 
 job_template: &job_template
@@ -25,7 +25,7 @@ job_template: &job_template
   no-output-timeout: 20m
   region: AWS_DEFAULT_REGION
   repo: $AWS_RESOURCE_NAME_PREFIX
-  path: '~/app'
+  path: '.'
   skip-when-tags-exist: false
   attach-workspace: true
   tag: 'latest'
