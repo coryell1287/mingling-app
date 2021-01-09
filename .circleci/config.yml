@@ -60,6 +60,8 @@ workflows:
               only: staging
       - pre-integration-checkout-workspace-job:
           name: pre-integration
+          requires:
+            - test
       - aws-ecr/build-and-push-image:
           context: staging
           <<: *job_template
