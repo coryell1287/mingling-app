@@ -48,5 +48,7 @@ workflows:
             branches:
               only: staging
       - aws-ecr/build-and-push-image:
+          docker:
+            - image: buildpack-deps:trusty
           context: staging
           <<: *job_template
