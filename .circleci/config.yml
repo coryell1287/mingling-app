@@ -3,6 +3,7 @@ jobs:
     executor:
       name: node/default
       tag: '14.15'
+    working_directory: '~/app'
     steps:
       - checkout
       - node/install-packages
@@ -22,6 +23,7 @@ job_template: &job_template
   no-output-timeout: 20m
   region: AWS_DEFAULT_REGION
   repo: $AWS_RESOURCE_NAME_PREFIX
+  path: '~/app'
   skip-when-tags-exist: false
   attach-workspace: true
   tag: 'latest'
@@ -34,7 +36,6 @@ job_template: &job_template
 orbs:
   node: circleci/node@4.1.0
   aws-ecr: circleci/aws-ecr@6.15.2
-  aws-ecs: circleci/aws-ecs@0.0.11
 version: 2.1
 workflows:
   run_tests:
