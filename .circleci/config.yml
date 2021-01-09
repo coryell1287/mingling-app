@@ -20,9 +20,9 @@ job_template: &job_template
   account-url: AWS_ECR_ACCOUNT_URL
   aws-access-key-id: AWS_ACCESS_KEY_ID
   aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-  dockerfile: ~/Dockerfile
+  dockerfile: Dockerfile
   no-output-timeout: 20m
-  workspace-root: workspace
+  # workspace-root: workspace
   region: AWS_DEFAULT_REGION
   repo: $AWS_RESOURCE_NAME_PREFIX
   path: '.'
@@ -38,7 +38,6 @@ job_template: &job_template
 orbs:
   node: circleci/node@4.1.0
   aws-ecr: circleci/aws-ecr@6.15.2
-  orb-tools: circleci/orb-tools@9.0
 version: 2.1
 workflows:
   run_tests:
