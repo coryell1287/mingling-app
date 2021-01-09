@@ -12,12 +12,10 @@ jobs:
           command: npm ci
       - run:
           command: npm run build
-      - run:
-          command: echo "$AWS_ECR_ACCOUNT_URL"
   deploy:
     steps:
       - run:
-          command: chmod x+ deploy.sh
+          command: chmod +x deploy.sh
       - run:
           command: |
              if [ "${CIRCLE_BRANCH}" = "staging" ]; then
