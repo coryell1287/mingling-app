@@ -12,6 +12,10 @@ jobs:
           command: npm ci
       - run:
           command: npm run build
+      - run:
+          command: echo $CIRCLE_BRANCH
+      - run:
+          command: echo $AWS_ACCESS_KEY_ID
 
 orbs:
   node: circleci/node@4.1.0
