@@ -1,13 +1,4 @@
 jobs:
-  pre-integration-checkout-workspace-job:
-    executor:
-      name: orb-tools/alpine
-      resource-class: small
-    steps:
-      - checkout
-      - persist_to_workspace:
-          root: .
-          paths: ['app/Dockerfile']
   test:
     executor:
       name: node/default
@@ -57,10 +48,6 @@ workflows:
           filters:
             branches:
               only: staging
-      - pre-integration-checkout-workspace-job:
-          name: pre-integration
-          requires:
-            - test
       - aws-ecr/build-and-push-image:
           context: staging
           <<: *job_template
