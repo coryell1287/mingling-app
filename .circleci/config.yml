@@ -30,8 +30,7 @@ job_template: &job_template
   attach-workspace: true
   tag: 'latest'
   executor:
-    name: aws-ecr/default
-    use-docker-layer-caching: true
+    name: docker
   requires:
     - test
   filters:
