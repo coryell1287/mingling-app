@@ -12,10 +12,6 @@ jobs:
           command: npm ci
       - run:
           command: npm run build
-      - run:
-          command: echo $CIRCLE_BRANCH
-      - run:
-          command: echo $AWS_ACCESS_KEY_ID
 
 orbs:
   node: circleci/node@4.1.0
@@ -38,7 +34,7 @@ workflows:
           dockerfile: Dockerfile
           no-output-timeout: 20m
           region: AWS_DEFAULT_REGION
-          repo: AWS_RESOURCE_NAME_PREFIX
+          repo: $AWS_RESOURCE_NAME_PREFIX
           skip-when-tags-exist: false
           tag: 'latest'
           requires:
