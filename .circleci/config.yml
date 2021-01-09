@@ -13,6 +13,8 @@ jobs:
           command: npm ci
       - run:
           command: npm run build
+      - run:
+          command: find . -name Dockerfile
 
 
 job_template: &job_template
