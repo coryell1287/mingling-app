@@ -16,11 +16,12 @@ jobs:
     machine: true
     steps:
       - run:
-          command: chmod +x deploy.sh
-      - run:
+        name: Executing shell script
+        paths: '.'
           command: |
             if [ "${CIRCLE_BRANCH}" = "staging" ]; then
                 echo "${AWS_ACCESS_KEY_ID}"
+                chmod +x deploy.sh
                 ./deploy.sh
             fi
 orbs:
