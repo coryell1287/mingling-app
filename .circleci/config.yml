@@ -13,15 +13,16 @@ jobs:
       - run:
           command: npm run build
   deploy:
+    machine: true
     steps:
       - run:
           command: chmod +x deploy.sh
       - run:
           command: |
-             if [ "${CIRCLE_BRANCH}" = "staging" ]; then
+            if [ "${CIRCLE_BRANCH}" = "staging" ]; then
                 echo "${AWS_ACCESS_KEY_ID}"
                 ./deploy.sh
-             fi
+            fi
 orbs:
   node: circleci/node@4.1.0
   aws-ecr: circleci/aws-ecr@6.2.0
@@ -34,8 +35,6 @@ workflows:
           filters:
             branches:
               only: staging
-  deploy_aws:
-    jobs:
       - deploy:
           filters:
              branches:
