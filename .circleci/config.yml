@@ -22,13 +22,16 @@ job_template: &job_template
   aws-secret-access-key: AWS_SECRET_ACCESS_KEY
   dockerfile: Dockerfile
   no-output-timeout: 20m
-  # workspace-root: workspace
+  workspace-root: workspace
   region: AWS_DEFAULT_REGION
   repo: $AWS_RESOURCE_NAME_PREFIX
-  path: '.'
+  path: workspace
   skip-when-tags-exist: false
   attach-workspace: true
   tag: 'latest'
+  executor:
+    name: aws-ecr/default
+    use-docker-layer-caching: true
   requires:
     - test
   filters:
