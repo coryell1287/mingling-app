@@ -12,7 +12,6 @@ jobs:
     executor:
       name: node/default
       tag: '14.15'
-    working_directory: '~/app'
     steps:
       - checkout
       - node/install-packages
@@ -30,7 +29,7 @@ job_template: &job_template
   account-url: AWS_ECR_ACCOUNT_URL
   aws-access-key-id: AWS_ACCESS_KEY_ID
   aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-  dockerfile: /home/circleci/app/Dockerfile
+  dockerfile: ~/Dockerfile
   no-output-timeout: 20m
   workspace-root: workspace
   region: AWS_DEFAULT_REGION
