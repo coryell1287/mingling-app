@@ -15,6 +15,7 @@ jobs:
   deploy:
     machine: true
     steps:
+      - checkout
       - run:
         name: Executing shell script
         paths: '.'
