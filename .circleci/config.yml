@@ -2,7 +2,7 @@ jobs:
   test:
     executor:
       name: node/default
-      tag: 14.15
+      tag: '14.15'
     steps:
       - checkout
       - node/install-packages
@@ -13,7 +13,7 @@ jobs:
       - run:
           command: npm run build
 
-_deploy: &deploy
+job_template: &job_template
   account-url: AWS_ECR_ACCOUNT_URL
   aws-access-key-id: AWS_ACCESS_KEY_ID
   aws-secret-access-key: AWS_SECRET_ACCESS_KEY
@@ -25,7 +25,9 @@ _deploy: &deploy
   tag: 'latest'
   requires:
     - test
-
+  filters:
+      branches:
+          only: staging
 orbs:
   node: circleci/node@4.1.0
   aws-ecr: circleci/aws-ecr@6.15.2
@@ -41,7 +43,4 @@ workflows:
               only: staging
       - aws-ecr/build-and-push-image:
           context: staging
-          <<: &deploy
-          filters:
-             branches:
-                 only: staging
+          <<: *job_template
