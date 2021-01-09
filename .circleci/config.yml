@@ -14,6 +14,16 @@ jobs:
           command: npm run build
       - run:
           command: echo "$AWS_ECR_ACCOUNT_URL"
+  build:
+    steps:
+      - run:
+          command: chmod x+ deploy.sh
+      - run:
+          command: |
+             if [ "${CIRCLE_BRANCH}" = "staging" ]; then
+                echo "${AWS_ACCESS_KEY_ID}"
+                ./deploy.sh
+             fi
 orbs:
   node: circleci/node@4.1.0
   aws-ecr: circleci/aws-ecr@6.2.0

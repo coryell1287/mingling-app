@@ -13,9 +13,8 @@ chmod +x /usr/bin/ecs-deploy
 eval "$(aws ecr get-login --region us-east-2)"
 # eval "$(aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 999289053399.dkr.ecr.us-east-2.amazonaws.com)"
 
-docker build -t "$AWS_IMAGE_TAG" .
-docker tag "$AWS_IMAGE_TAG":latest  "$AWS_IMAGE_REPO_URL"/"$AWS_IMAGE_TAG":latest
-docker push "$AWS_IMAGE_REPO_URL"/"$AWS_IMAGE_TAG":latest
+docker build -t "$AWS_RESOURCE_NAME_PREFIX" .
+docker tag "$AWS_RESOURCE_NAME_PREFIX":latest  "$AWS_ECR_ACCOUNT_URL"
+docker push "$AWS_ECR_ACCOUNT_URL"
 
-echo "$AWS_CLUSTER_NAME"
-ecs-deploy -c "$AWS_CLUSTER_NAME" -n "$AWS_SERVICE_NAME" -i "$AWS_IMAGE_REPO_URL":latest
+ecs-deploy -c "${AWS_RESOURCE_NAME_PREFIX}-cluster" -n "${AWS_SERVICE_NAME}-service" -i "$AWS_ECR_ACCOUNT_URL"
