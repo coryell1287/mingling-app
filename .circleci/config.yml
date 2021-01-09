@@ -19,7 +19,7 @@ jobs:
 
 orbs:
   node: circleci/node@4.1.0
-  aws-ecr: circleci/aws-ecr@6.2.0
+  aws-ecr: circleci/aws-ecr@6.15.2
   aws-ecs: circleci/aws-ecs@0.0.11
 version: 2.1
 workflows:
@@ -32,9 +32,16 @@ workflows:
               only: staging
       - aws-ecr/build-and-push-image:
           context: staging
+          aws-ecr/build-and-push-image:
+          account-url: $AWS_ECR_ACCOUNT_URL
+          aws-access-key-id: $AWS_ACCESS_KEY_ID
+          aws-secret-access-key: $AWS_SECRET_ACCESS_KEY
           dockerfile: Dockerfile
-          repo: '${AWS_RESOURCE_NAME_PREFIX}'
-          tag: "$CIRCLE_SHA1"
+          no-output-timeout: 20m
+          region: $AWS_DEFAULT_REGION
+          repo: $AWS_RESOURCE_NAME_PREFIX
+          skip-when-tags-exist: false
+          tag: 'latest'
           requires:
             - test
           filters:
