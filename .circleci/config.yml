@@ -26,10 +26,12 @@ workflows:
   run_tests:
     jobs:
       - test:
+          context: staging
           filters:
             branches:
               only: staging
       - aws-ecr/build-and-push-image:
+          context: staging
           dockerfile: Dockerfile
           repo: '${AWS_RESOURCE_NAME_PREFIX}'
           tag: "$CIRCLE_SHA1"
