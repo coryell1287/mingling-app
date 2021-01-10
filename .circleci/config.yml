@@ -25,7 +25,7 @@ job_template: &job_template
   workspace-root: workspace
   region: AWS_DEFAULT_REGION
   repo: $AWS_RESOURCE_NAME_PREFIX
-  path: workspace
+  path: app
   skip-when-tags-exist: false
   attach-workspace: true
   tag: 'latest'
