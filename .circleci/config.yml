@@ -44,7 +44,7 @@ aws_job_template: &aws_job_template
           only: staging
 
 service_template: &service_template
-  family: ${AWS_RESOURCE_NAME_PREFIX}-task
+  family: ${AWS_RESOURCE_NAME_PREFIX}-service
   cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-cluster
   container-image-name-updates: container=${AWS_RESOURCE_NAME_PREFIX},tag=latest
   filters:
