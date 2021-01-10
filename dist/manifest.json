@@ -1,0 +1,12 @@
+{
+  "name": "Assets Manifest file",
+  "app.js": "autoapp.ff310ecfb4b95e091527.js",
+  "runtime.js": "autoruntime.e96dd17e699d6e088cba.js",
+  "vendors.js": "autovendors.062b663e62e5ec2671c4.js",
+  "379.db7bcce207539dd59ff9.js": "auto379.db7bcce207539dd59ff9.js",
+  "../shared/assets/images/plant.webp": "autoassets/images/plant.webp",
+  "workbox-de04bb05.js": "autoworkbox-de04bb05.js",
+  "service-worker.js": "autoservice-worker.js",
+  "../shared/assets/icons/favicon.ico": "autoassets/icons/favicon.ico",
+  "manifest.webmanifest": "automanifest.webmanifest"
+}
