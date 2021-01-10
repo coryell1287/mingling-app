@@ -11,7 +11,7 @@ jobs:
       - run:
           command: npm ci
       - run:
-          command: npm run build
+          command: npx webpack --progress --config ./shared/tooling/webpack.prod.js
       - run:
           command: echo $PWD
   pre-integration-checkout-workspace-job:
@@ -43,10 +43,19 @@ job_template: &job_template
       branches:
           only: staging
 
+service_template: &service_template
+  family: '${$AWS_RESOURCE_NAME_PREFIX}-service'
+  cluster-name: '${$AWS_RESOURCE_NAME_PREFIX}-cluster'
+  container-image-name-updates: 'container=${$AWS_RESOURCE_NAME_PREFIX}-service,tag=latest'
+  filters:
+    branches:
+        only: staging
+
 orbs:
   orb-tools: circleci/orb-tools@9.0
   node: circleci/node@4.1.0
   aws-ecr: circleci/aws-ecr@6.15.2
+  aws-ecs: circleci/aws-ecs@0.0.15
 version: 2.1
 workflows:
   run_tests:
@@ -63,3 +72,9 @@ workflows:
       - aws-ecr/build-and-push-image:
           context: staging
           <<: *job_template
+      - aws-ecs/deploy-service-update:
+          context: staging
+          requires:
+            - aws-ecr/build_and_push_image
+          <<: *service_template
+
