@@ -14,7 +14,15 @@ jobs:
           command: npm run build
       - run:
           command: echo $PWD
-
+  pre-integration-checkout-workspace-job:
+    executor:
+      name: orb-tools/alpine
+      resource-class: small
+    steps:
+      - checkout
+      - persist_to_workspace:
+          root: .
+          paths: [Dockerfile]
 
 job_template: &job_template
   account-url: AWS_ECR_ACCOUNT_URL
@@ -22,10 +30,10 @@ job_template: &job_template
   aws-secret-access-key: AWS_SECRET_ACCESS_KEY
   dockerfile: Dockerfile
   no-output-timeout: 20m
-  workspace-root: workspace
+  workspace-root: '.'
   region: AWS_DEFAULT_REGION
   repo: $AWS_RESOURCE_NAME_PREFIX
-  path: './'
+  path: '.'
   skip-when-tags-exist: false
   attach-workspace: true
   tag: 'latest'
@@ -36,6 +44,7 @@ job_template: &job_template
           only: staging
 
 orbs:
+  orb-tools: circleci/orb-tools@9.0
   node: circleci/node@4.1.0
   aws-ecr: circleci/aws-ecr@6.15.2
 version: 2.1
@@ -47,6 +56,10 @@ workflows:
           filters:
             branches:
               only: staging
+      - pre-integration-checkout-workspace-job:
+          name: pre-integration
+          requires:
+            - test
       - aws-ecr/build-and-push-image:
           context: staging
           <<: *job_template
