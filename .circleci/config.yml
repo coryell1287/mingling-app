@@ -13,15 +13,6 @@ jobs:
       - run:
           command: npm run build
 
-  pre-integration-checkout-workspace-job:
-    executor:
-      name: orb-tools/alpine
-      resource-class: small
-    steps:
-      - checkout
-      - persist_to_workspace:
-          root: .
-          paths: [Dockerfile]
 
 aws_job_template: &aws_job_template
   account-url: AWS_ECR_ACCOUNT_URL
@@ -46,7 +37,8 @@ aws_job_template: &aws_job_template
 service_template: &service_template
   family: ${AWS_RESOURCE_NAME_PREFIX}-task
   cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-cluster
-  container-image-name-updates: container=${AWS_RESOURCE_NAME_PREFIX}-task,tag=latest
+  service-name: ${AWS_RESOURCE_NAME_PREFIX}-service
+  container-image-name-updates: container=${AWS_RESOURCE_NAME_PREFIX},tag=latest
   filters:
     branches:
         only: staging
@@ -55,7 +47,7 @@ orbs:
   node: circleci/node@4.1.0
   orb-tools: circleci/orb-tools@9.0
   aws-ecr: circleci/aws-ecr@6.15.2
-  aws-ecs: circleci/aws-ecs@0.0.15
+  aws-ecs: circleci/aws-ecs@0.0.10
 version: 2.1
 workflows:
   run_tests:
@@ -65,10 +57,6 @@ workflows:
           filters:
             branches:
               only: staging
-      - pre-integration-checkout-workspace-job:
-          name: pre-integration
-          requires:
-            - test
       - aws-ecr/build-and-push-image:
           context: staging
           <<: *aws_job_template
