@@ -30,7 +30,7 @@ aws_job_template: &aws_job_template
   dockerfile: Dockerfile
   no-output-timeout: 20m
   workspace-root: '.'
-  region: AWS_DEFAULT_REGION
+  region: AWS_REGION
   repo: $AWS_RESOURCE_NAME_PREFIX
   create-repo: true
   path: '.'
@@ -75,6 +75,6 @@ workflows:
       - aws-ecs/deploy-service-update:
           context: staging
           requires:
-            - aws-ecr/build_and_push_image
+            - aws-ecr/build-and-push-image
           <<: *service_template
 
