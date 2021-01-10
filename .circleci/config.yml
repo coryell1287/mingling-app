@@ -29,8 +29,6 @@ job_template: &job_template
   skip-when-tags-exist: false
   attach-workspace: true
   tag: 'latest'
-  executor:
-    name: docker
   requires:
     - test
   filters:
