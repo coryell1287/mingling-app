@@ -2,6 +2,7 @@
 // Please do not change this file!
 interface CssExports {
   'bg-color': string;
+  'center': string;
   'h1': string;
   'jumbotron': string;
 }
