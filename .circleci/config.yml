@@ -90,6 +90,13 @@ workflows:
 
   production_deploy:
     jobs:
+      - request-approval:
+          type: approval
+          filters:
+            branches:
+              only: master
+          requires:
+            - aws-ecr/build-and-push-image
       - test:
           context: production
           filters:
@@ -106,5 +113,5 @@ workflows:
       - aws-ecs/deploy-service-update:
             context: production
             requires:
-              - hold
+              - request-approval
             <<: *service_template
