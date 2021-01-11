@@ -28,9 +28,7 @@ aws_job_template: &aws_job_template
   skip-when-tags-exist: false
   attach-workspace: true
   tag: 'latest'
-  requires:
-    - test
-  
+
 
 service_template: &service_template
   family: ${AWS_RESOURCE_NAME_PREFIX}-task
@@ -41,7 +39,6 @@ service_template: &service_template
 
 orbs:
   node: circleci/node@4.1.0
-  orb-tools: circleci/orb-tools@9.0
   aws-ecr: circleci/aws-ecr@6.15.2
   aws-ecs: circleci/aws-ecs@0.0.10
 version: 2.1
@@ -58,6 +55,8 @@ workflows:
           filters:
             branches:
               only: staging
+          requires:
+            - test
           <<: *aws_job_template
       - aws-ecs/deploy-service-update:
           context: staging
@@ -67,21 +66,28 @@ workflows:
           requires:
             - aws-ecr/build-and-push-image
           <<: *service_template
+
   uat_deploy:
     jobs:
       - test:
-          context: production
+          context: uat
           filters:
             branches:
-              only: production
+              only: uat
       - aws-ecr/build-and-push-image:
-          context: production
+          context: uat
+          filters:
+            branches:
+              only: uat
+          requires:
+            - test
           <<: *aws_job_template
       - aws-ecs/deploy-service-update:
-            context: production
+            context: uat
             requires:
               - aws-ecr/build-and-push-image
             <<: *service_template
+
   production_deploy:
     jobs:
       - test:
@@ -91,10 +97,14 @@ workflows:
               only: production
       - aws-ecr/build-and-push-image:
           context: production
+          filters:
+            branches:
+              only: master
+          requires:
+            - test
           <<: *aws_job_template
       - aws-ecs/deploy-service-update:
             context: production
             requires:
-              - aws-ecr/build-and-push-image
+              - hold
             <<: *service_template
-
