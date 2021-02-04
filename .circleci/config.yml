@@ -11,10 +11,8 @@ jobs:
             docker build -f shared/config/Dockerfile.dev -t "$AWS_RESOURCE_NAME_PREFIX"-test .
             docker run \
             -it \
-            --rm \
-            --name client_code \
+            "$AWS_RESOURCE_NAME_PREFIX"-test \
             /bin/bash -c "npm run test:coverage" \
-            "$AWS_RESOURCE_NAME_PREFIX"-test
       - store_artifacts:
           path: artifacts
           destination: artifacts
