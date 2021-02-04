@@ -1,17 +1,10 @@
-import preprocessor from 'cypress-cucumber-preprocessor';
-import coverage from '@cypress/code-coverage/task';
-import babelrc from '@cypress/code-coverage/use-babelrc';
+import cypressCucumber from 'cypress-cucumber-preprocessor';
 import { lighthouse, pa11y, prepareAudit } from 'cypress-audit';
-import selectTestsWithGrep from 'cypress-select-tests/grep';
 
-const { default: cucumber } = preprocessor;
+const { default: cucumber } = cypressCucumber;
 
-export default function (on, config) {
+export default (on, config) => {
   on('file:preprocessor', cucumber());
-  on('file:preprocessor', selectTestsWithGrep(config));
-  coverage(on, config);
-  on('file:preprocessor', babelrc);
-
   on('before:browser:launch', (browser = {}, launchOptions) => {
     prepareAudit(launchOptions);
   });
@@ -24,6 +17,5 @@ export default function (on, config) {
       console.log(pa11yReport);
     }),
   });
-
   return config;
-}
+};

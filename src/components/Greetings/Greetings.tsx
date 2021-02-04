@@ -1,11 +1,6 @@
-/// <reference types="cypress" />
 import React from 'react';
-import { mount } from 'cypress-react-unit-test';
-import { Greetings } from '@components/Greetings/Greetings';
+// import classes from '@components/Home/home.css';
 
-describe('<Greetings/>', function () {
-  it('will load the greeting component', function () {
-    mount(<Greetings />);
-    cy.get('[data-greet=greet]').should('have.html', 'Hello World');
-  });
-});
+export function Greetings(): React.ReactElement {
+  return <div data-greet="greet">Hello World</div>;
+}

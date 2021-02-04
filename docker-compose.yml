@@ -1,5 +1,5 @@
-web:
-  image: nginx
+build:
+  image: node:14.15
   volumes:
    - ./dist:/usr/share/nginx/html
   ports:

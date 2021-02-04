@@ -23,7 +23,6 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js', '.css', '.json', '.ico'],
     alias: {
       '@components': resolve(__dirname, '../../src/components'),
-      '@shared': resolve(__dirname, '../../src/components/config'),
       '@assets': resolve(__dirname, '../../src/assets'),
     },
   },
@@ -40,11 +39,6 @@ module.exports = {
           name: 'vendors',
           test: /[/]node_modules[/]/,
           chunks: 'all',
-        },
-        common: {
-          test: /[/]src[/]components[/]/,
-          chunks: 'all',
-          minSize: 0,
         },
       },
     },
@@ -96,11 +90,11 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: '../shared/assets/images',
+          from: '../src/assets/images',
           to: './assets/images',
         },
         {
-          from: '../shared/assets/icons',
+          from: '../src/assets/icons',
           to: './assets/icons',
         },
         {
@@ -128,7 +122,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: 'index.html',
-      chunks: ['vendors', 'common', 'app'],
+      chunks: ['vendors', 'app'],
       chunksSortMode: 'manual',
     }),
     new ImageminPlugin({
@@ -136,4 +130,3 @@ module.exports = {
     }),
   ],
 };
-

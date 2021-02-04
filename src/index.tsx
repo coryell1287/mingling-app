@@ -1,10 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Home } from '@components/Home';
 
-export function App() {
+import { Home } from '@components/Home';
+import { Header } from '@components/Header';
+import { Head } from '@components/Head';
+
+export function App(): React.ReactElement {
   return (
     <div>
+      <Head />
+      <Header />
       <Home />
     </div>
   );

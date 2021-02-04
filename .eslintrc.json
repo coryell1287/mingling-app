@@ -10,14 +10,7 @@
     "plugin:import/errors",
     "plugin:import/warnings"
   ],
-  "plugins": [
-    "cypress",
-    "chai-friendly",
-    "import",
-    "@typescript-eslint",
-    "sonarjs",
-    "prettier"
-  ],
+  "plugins": ["cypress", "chai-friendly", "import", "@typescript-eslint", "react", "sonarjs", "prettier"],
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module",
@@ -50,15 +43,7 @@
     "import/order": [
       "error",
       {
-        "groups": [
-          "builtin",
-          "external",
-          "internal",
-          "parent",
-          "sibling",
-          "index",
-          "unknown"
-        ],
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index", "unknown"],
         "newlines-between": "always"
       }
     ]
@@ -68,10 +53,10 @@
       "alias": {
         "map": [
           ["@components", "./src/components"],
-          ["@resources", "./src/resources"]
+          ["@assets", "./src/assets"]
         ],
-        "extensions": [".ts", ".tsx", ".json"]
+        "extensions": [".ts", ".tsx", ".json", ".ico"]
       }
     }
   }
-}    
+}

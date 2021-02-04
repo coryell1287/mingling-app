@@ -1,9 +1,10 @@
 const { merge } = require('webpack-merge');
-const common = require('./webpack.common.js');
 const webpack = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { resolve } = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+
+const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
   mode: 'development',
@@ -13,8 +14,9 @@ module.exports = merge(common, {
     port: 9000,
     overlay: true,
     hot: true,
+    open: true,
     stats: 'errors-only',
-    contentBase: resolve(__dirname, './dist'),
+    contentBase: resolve(__dirname, '../../dist'),
     writeToDisk: true,
     compress: true,
     historyApiFallback: true,
@@ -26,4 +28,4 @@ module.exports = merge(common, {
     new BundleAnalyzerPlugin(),
     new webpack.HotModuleReplacementPlugin(),
   ],
-});   
+});

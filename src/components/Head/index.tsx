@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import Helmet from 'react-helmet';
-import favicon from '@assets/icons/favicon.ico';
+import { useLocation } from 'react-router-dom';
 
 export function Head(): ReactElement {
   return (
@@ -13,7 +13,6 @@ export function Head(): ReactElement {
       <meta name="language" content="English" />
       <meta name="revisit-after" content="12 days" />
       <meta name="author" content="Creative type" />
-      <link rel="icon" type="image/png" sizes="16x16" href={favicon} />
       <title>mingling-app</title>
     </Helmet>
   );

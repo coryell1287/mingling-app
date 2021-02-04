@@ -1,14 +1,20 @@
-FROM ubuntu
+FROM node:14.15 as build
 
-RUN apt-get update -y
+WORKDIR /app
 
-RUN apt-get install -y nano wget curl dialog net-tools
+COPY package*.json ./
 
-RUN apt-get install -y nginx
+RUN npm install 
 
-COPY ./dist/ /usr/share/nginx/html/
+COPY . ./
 
-COPY ./dist/ /var/www/html/
+RUN npm run build
+
+FROM nginx:stable-alpine
+
+COPY --from=build /app/dist /usr/share/nginx/html
+
+COPY ./shared/config/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 

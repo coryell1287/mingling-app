@@ -1,18 +1,34 @@
 jobs:
-  test:
+  pre-integration-checkout-workspace-job:
     executor:
-      name: node/default
-      tag: '14.15'
+      name: orb-tools/alpine
+      resource-class: small
     steps:
       - checkout
-      - node/install-packages
+      - persist_to_workspace:
+          root: .
+          paths:
+          - .
+  test:
+    machine: true
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
       - run:
-          command: npx audit-ci -h -c
+          name: "Build docker image for testing"
+          command: |
+            docker build -f shared/config/Dockerfile.dev -t ${AWS_RESOURCE_NAME_PREFIX}-test
+            docker run -it --rm --name client_code \
+            -v ${PWD}/artifacts:/artifacts \
+            /bin/bash -c npm run test:coverage \
+            ${AWS_RESOURCE_NAME_PREFIX}-test
       - run:
-          command: npm ci
-      - run:
-          command: npm run build
-
+          name: 'Build docker image'
+          command: |
+      - store_artifacts:
+          path: artifacts
+          destination: artifacts
 
 aws_job_template: &aws_job_template
   account-url: AWS_ECR_ACCOUNT_URL
@@ -27,20 +43,21 @@ aws_job_template: &aws_job_template
   path: '.'
   skip-when-tags-exist: false
   attach-workspace: true
-  tag: 'latest'
+  tag: CIRCLE_SHA1
 
 
 service_template: &service_template
   family: ${AWS_RESOURCE_NAME_PREFIX}-task
   cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-cluster
   service-name: ${AWS_RESOURCE_NAME_PREFIX}-service
-  container-image-name-updates: container=${AWS_RESOURCE_NAME_PREFIX},tag=latest
+  container-image-name-updates: container=${AWS_RESOURCE_NAME_PREFIX},tag=${CIRCLE_SHA1}
 
 
 orbs:
   node: circleci/node@4.1.0
   aws-ecr: circleci/aws-ecr@6.15.2
   aws-ecs: circleci/aws-ecs@0.0.10
+  cypress: cypress-io/cypress@1
 version: 2.1
 workflows:
   staging_deploy:
@@ -74,6 +91,23 @@ workflows:
           filters:
             branches:
               only: uat
+      - cypress/install:
+          build: 'npm run build'
+      - cypress/run:
+          name: E2E test
+          command: npm run test:e2e
+          post-steps:
+            - store_artifacts:
+                path: artifacts/tests
+          requires:
+            - cypress/install
+          attach-workspace: true
+          record: true
+          start: 'npm start'
+          context: staging
+          filters:
+            branches:
+              only: staging
       - aws-ecr/build-and-push-image:
           context: uat
           filters:
@@ -84,6 +118,9 @@ workflows:
           <<: *aws_job_template
       - aws-ecs/deploy-service-update:
             context: uat
+            filters:
+              branches:
+              only: uat
             requires:
               - aws-ecr/build-and-push-image
             <<: *service_template
@@ -112,6 +149,9 @@ workflows:
           <<: *aws_job_template
       - aws-ecs/deploy-service-update:
             context: production
+            filters:
+                 branches:
+                  only: master
             requires:
               - request-approval
             <<: *service_template
