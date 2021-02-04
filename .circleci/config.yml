@@ -30,7 +30,7 @@ aws_job_template: &aws_job_template
   path: '.'
   skip-when-tags-exist: false
   attach-workspace: true
-  tag: CIRCLE_SHA1
+  tag: $CIRCLE_SHA1
 
 
 service_template: &service_template
