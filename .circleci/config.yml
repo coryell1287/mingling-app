@@ -8,7 +8,7 @@ jobs:
       - run:
           name: "Build docker image for testing"
           command: |
-            docker build -f shared/config/Dockerfile.dev -t ${AWS_RESOURCE_NAME_PREFIX}-test
+            docker build -f shared/config/Dockerfile.dev -t ${AWS_RESOURCE_NAME_PREFIX}-test .
             docker run -it --rm --name client_code \
             -v ${PWD}/artifacts:/artifacts \
             /bin/bash -c npm run test:coverage \
@@ -69,7 +69,7 @@ workflows:
           requires:
             - aws-ecr/build-and-push-image
           <<: *service_template
-          
+
   uat_deploy:
     jobs:
       - test:
@@ -83,7 +83,7 @@ workflows:
             branches:
               only: uat
           requires:
-            - test 
+            - test
           <<: *aws_job_template
       - aws-ecs/deploy-service-update:
           context: uat
@@ -125,6 +125,6 @@ workflows:
               - request-approval
             <<: *service_template
 
-            
-            
+
+
 
