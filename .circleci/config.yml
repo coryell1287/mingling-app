@@ -9,8 +9,10 @@ jobs:
           name: "Build docker image for testing"
           command: |
             docker build -f shared/config/Dockerfile.dev -t "$AWS_RESOURCE_NAME_PREFIX"-test .
-            docker run -it --rm --name client_code \
-            -v "$PWD"/artifacts:/artifacts \
+            docker run \
+            -it \
+            --rm \
+            --name client_code \
             /bin/bash -c "npm run test:coverage" \
             "$AWS_RESOURCE_NAME_PREFIX"-test
       - store_artifacts:
