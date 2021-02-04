@@ -1,14 +1,4 @@
 jobs:
-  pre-integration-checkout-workspace-job:
-    executor:
-      name: orb-tools/alpine
-      resource-class: small
-    steps:
-      - checkout
-      - persist_to_workspace:
-          root: .
-          paths:
-          - .
   test:
     machine: true
     steps:
@@ -23,9 +13,6 @@ jobs:
             -v ${PWD}/artifacts:/artifacts \
             /bin/bash -c npm run test:coverage \
             ${AWS_RESOURCE_NAME_PREFIX}-test
-      - run:
-          name: 'Build docker image'
-          command: |
       - store_artifacts:
           path: artifacts
           destination: artifacts
@@ -51,7 +38,6 @@ service_template: &service_template
   cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-cluster
   service-name: ${AWS_RESOURCE_NAME_PREFIX}-service
   container-image-name-updates: container=${AWS_RESOURCE_NAME_PREFIX},tag=${CIRCLE_SHA1}
-
 
 orbs:
   node: circleci/node@4.1.0
@@ -83,7 +69,7 @@ workflows:
           requires:
             - aws-ecr/build-and-push-image
           <<: *service_template
-
+          
   uat_deploy:
     jobs:
       - test:
@@ -91,39 +77,22 @@ workflows:
           filters:
             branches:
               only: uat
-      - cypress/install:
-          build: 'npm run build'
-      - cypress/run:
-          name: E2E test
-          command: npm run test:e2e
-          post-steps:
-            - store_artifacts:
-                path: artifacts/tests
-          requires:
-            - cypress/install
-          attach-workspace: true
-          record: true
-          start: 'npm start'
-          context: staging
-          filters:
-            branches:
-              only: staging
       - aws-ecr/build-and-push-image:
           context: uat
           filters:
             branches:
               only: uat
           requires:
-            - test
+            - test 
           <<: *aws_job_template
       - aws-ecs/deploy-service-update:
-            context: uat
-            filters:
-              branches:
-              only: uat
-            requires:
+          context: uat
+          filters:
+           branches:
+             only: uat
+          requires:
               - aws-ecr/build-and-push-image
-            <<: *service_template
+          <<: *service_template
 
   production_deploy:
     jobs:
@@ -155,3 +124,7 @@ workflows:
             requires:
               - request-approval
             <<: *service_template
+
+            
+            
+
