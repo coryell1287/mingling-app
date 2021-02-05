@@ -11,11 +11,13 @@ jobs:
             docker build -f shared/config/Dockerfile.dev -t "$AWS_RESOURCE_NAME_PREFIX"-test .
             docker run \
             -it \
-            "$AWS_RESOURCE_NAME_PREFIX"-test \
-            /bin/bash -c "npm run test:coverage" \
+            --rm \
+            --name test-image \
+            -v ${PWD}/coverage:/coverage \
+            /bin/bash -c "npm run test:coverage"
       - store_artifacts:
-          path: artifacts
-          destination: artifacts
+          path: coverage
+          destination: coverage
 
 aws_job_template: &aws_job_template
   account-url: AWS_ECR_ACCOUNT_URL
@@ -30,14 +32,14 @@ aws_job_template: &aws_job_template
   path: '.'
   skip-when-tags-exist: false
   attach-workspace: true
-  tag: $CIRCLE_SHA1
+  tag: $CIRCLE_BUILD_NUM
 
 
 service_template: &service_template
   family: ${AWS_RESOURCE_NAME_PREFIX}-task
   cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-cluster
   service-name: ${AWS_RESOURCE_NAME_PREFIX}-service
-  container-image-name-updates: container=${AWS_RESOURCE_NAME_PREFIX},tag=${CIRCLE_SHA1}
+  container-image-name-updates: container=${AWS_RESOURCE_NAME_PREFIX},tag=${$CIRCLE_BUILD_NUM}
 
 orbs:
   node: circleci/node@4.1.0
