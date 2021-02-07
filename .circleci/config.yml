@@ -14,10 +14,13 @@ jobs:
             -v ${PWD}/coverage:/coverage \
             "$AWS_RESOURCE_NAME_PREFIX"-test \
             /bin/bash -c "npm run test:coverage"
+      - store_test_results:
+          path: coverage
       - store_artifacts:
-          path: ~/project/coverage
+          path: ./coverage/clover.xml
+      - store_artifacts: # upload test coverage as artifact
+          path: ./coverage/lcov.info
           destination: tests
-
 
 aws_job_template: &aws_job_template
   account-url: AWS_ECR_ACCOUNT_URL
