@@ -37,7 +37,7 @@ service_template: &service_template
   family: ${AWS_RESOURCE_NAME_PREFIX}-task
   cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-cluster
   service-name: ${AWS_RESOURCE_NAME_PREFIX}-service
-  container-image-name-updates: container=${AWS_RESOURCE_NAME_PREFIX},tag=${$CIRCLE_BUILD_NUM}
+  container-image-name-updates: container=${AWS_RESOURCE_NAME_PREFIX},tag=${CIRCLE_BUILD_NUM}
 
 orbs:
   aws-ecr: circleci/aws-ecr@6.15.2
