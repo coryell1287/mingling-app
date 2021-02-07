@@ -14,15 +14,11 @@ jobs:
             -v ${PWD}/coverage:/coverage \
             "$AWS_RESOURCE_NAME_PREFIX"-test \
             /bin/bash -c "npm run test:coverage"
-      - persist_to_workspace:
-          root: '.'
-          paths:
-            - coverage
       - store_artifacts:
           path: ~/project/coverage
           destination: tests
 
-          
+
 aws_job_template: &aws_job_template
   account-url: AWS_ECR_ACCOUNT_URL
   aws-access-key-id: AWS_ACCESS_KEY_ID
