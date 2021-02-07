@@ -17,14 +17,9 @@ jobs:
       - run:
           name: "List directory"
           command: |
-            ls -lha
-      - store_test_results:
-          path: coverage
-      - store_artifacts:
-          path: ./coverage/clover.xml
+            ls -lha ./coverage/
       - store_artifacts: # upload test coverage as artifact
           path: ./coverage/lcov.info
-          destination: tests
 
 aws_job_template: &aws_job_template
   account-url: AWS_ECR_ACCOUNT_URL
