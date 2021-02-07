@@ -16,7 +16,7 @@ jobs:
             "$AWS_RESOURCE_NAME_PREFIX"-test \
             /bin/bash -c "npm run test:coverage"
       - store_artifacts:
-          path: /coverage
+          path: ~/tmp/coverage
           destination: tests
 
 aws_job_template: &aws_job_template
