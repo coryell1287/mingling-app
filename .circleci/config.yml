@@ -3,6 +3,10 @@ jobs:
     machine: true
     steps:
       - checkout
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - /coverage
       - run:
           name: "Build docker image for testing"
           command: |
