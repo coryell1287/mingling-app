@@ -1,7 +1,7 @@
 jobs:
   test:
     machine: true
-    working_directory: /tmp
+    working_directory: ~/tmp
     steps:
       - checkout
       - run:
