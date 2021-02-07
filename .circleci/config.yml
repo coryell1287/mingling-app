@@ -22,6 +22,7 @@ jobs:
           path: ~/project/coverage
           destination: tests
 
+          
 aws_job_template: &aws_job_template
   account-url: AWS_ECR_ACCOUNT_URL
   aws-access-key-id: AWS_ACCESS_KEY_ID
