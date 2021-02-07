@@ -1,12 +1,9 @@
 jobs:
   test:
     machine: true
+    working_directory: /tmp
     steps:
       - checkout
-      - persist_to_workspace:
-          root: .
-          paths:
-            - "."
       - run:
           name: "Build docker image for testing"
           command: |
@@ -19,8 +16,8 @@ jobs:
             "$AWS_RESOURCE_NAME_PREFIX"-test \
             /bin/bash -c "npm run test:coverage"
       - store_artifacts:
-          path: coverage
-          destination: coverage
+          path: /coverage
+          destination: tests
 
 aws_job_template: &aws_job_template
   account-url: AWS_ECR_ACCOUNT_URL
