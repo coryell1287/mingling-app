@@ -3,8 +3,10 @@ jobs:
     machine: true
     steps:
       - checkout
-      - attach_workspace:
-          at: .
+      - persist_to_workspace:
+          root: .
+          paths:
+            - "./coverage"
       - run:
           name: "Build docker image for testing"
           command: |
@@ -34,7 +36,6 @@ aws_job_template: &aws_job_template
   skip-when-tags-exist: false
   attach-workspace: true
   tag: $CIRCLE_BUILD_NUM
-
 
 service_template: &service_template
   family: ${AWS_RESOURCE_NAME_PREFIX}-task
