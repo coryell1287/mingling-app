@@ -6,7 +6,7 @@ jobs:
       - persist_to_workspace:
           root: ~/project
           paths:
-            - /coverage
+            - ./coverage
       - run:
           name: "Build docker image for testing"
           command: |
