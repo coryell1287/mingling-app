@@ -15,6 +15,10 @@ jobs:
             -v ${PWD}/coverage:/coverage \
             "$AWS_RESOURCE_NAME_PREFIX"-test \
             /bin/bash -c "npm run test:coverage"
+      - run:
+          name: "List directory"
+          command: |
+            ls -lha
       - store_test_results:
           path: coverage
       - store_artifacts:
