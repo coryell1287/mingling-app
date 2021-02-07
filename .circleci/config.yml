@@ -6,6 +6,7 @@ jobs:
       - run:
           name: "Build docker image for testing"
           command: |
+            mkdir coverage
             docker build -f shared/config/Dockerfile.dev -t "$AWS_RESOURCE_NAME_PREFIX"-test .
             docker run \
             -it \
