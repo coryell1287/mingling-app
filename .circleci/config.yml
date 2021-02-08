@@ -11,6 +11,7 @@ jobs:
              npm install
              npm run test:coverage
              ls -lah
+             ls -lah ./artifacts
              ls -lah ./tests
       - store_artifacts: # upload test coverage as artifact
           path: ./coverage/lcov.info
