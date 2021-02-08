@@ -1,8 +1,6 @@
 jobs:
   test:
-    executor:
-      name: node/default
-      tag: '14.15'
+    machine: true
     steps:
       - checkout
       - run:
