@@ -8,12 +8,12 @@ jobs:
           command: |
             docker build -f shared/config/Dockerfile.dev -t "$AWS_RESOURCE_NAME_PREFIX"-test .
             docker run \
-            -it \
-            --rm \
+            -itdp 9000:9000 \
             --name test-image \
             -v ${PWD}/coverage:/coverage \
             "$AWS_RESOURCE_NAME_PREFIX"-test \
-            /bin/bash -c "npm run test:coverage; docker cp test-image:/coverage ./coverage"
+            /bin/bash -c "npm run test:coverage"
+            docker cp test-image:/coverage ./coverage
       - run:
           name: 'List directories'
           command: |
