@@ -16,7 +16,10 @@ jobs:
             -v ${PWD}/coverage:/coverage \
             "$AWS_RESOURCE_NAME_PREFIX"-test \
             /bin/bash -c "npm run test:coverage"
-            ls -lah
+      - run:
+          name: 'List directories'
+          command: |
+              ls -lah
       - store_artifacts:
           path: ./coverage/lcov.info
 
