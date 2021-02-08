@@ -13,7 +13,7 @@ jobs:
             --name test-image \
             -v ${PWD}/coverage:/coverage \
             "$AWS_RESOURCE_NAME_PREFIX"-test \
-            /bin/bash -c "npm run test:coverage; ls -lah"
+            /bin/bash -c "npm run test:coverage; ls -lah ./coverage"
       - run:
           name: 'List directories'
           command: |
