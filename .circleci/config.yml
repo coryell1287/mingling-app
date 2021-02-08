@@ -1,19 +1,16 @@
 jobs:
   test:
+    executor:
+    name: node/default
+    tag: '14.15'
     machine: true
     steps:
       - checkout
       - run:
-          name: "Build docker image for testing"
+          name: "Install packages"
           command: |
-            docker build -f shared/config/Dockerfile.dev -t "$AWS_RESOURCE_NAME_PREFIX"-test .
-            docker run \
-            -it \
-            --name test-image \
-            "$AWS_RESOURCE_NAME_PREFIX"-test \
-            /bin/bash -c "npm run test:coverage"
-            docker run -itd test-image /bin/sh -c "ls -lah"
-            docker cp test-image:/coverage ~/coverage
+             npm install
+             npm run test:coverage
       - run:
           name: "Copy coverage files"
           command: |
@@ -43,6 +40,7 @@ service_template: &service_template
   container-image-name-updates: container=${AWS_RESOURCE_NAME_PREFIX},tag=${CIRCLE_BUILD_NUM}
 
 orbs:
+  node: circleci/node@4.1.0
   aws-ecr: circleci/aws-ecr@6.15.2
   aws-ecs: circleci/aws-ecs@0.0.10
   cypress: cypress-io/cypress@1
