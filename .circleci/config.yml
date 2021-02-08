@@ -12,11 +12,11 @@ jobs:
             --name test-image \
             "$AWS_RESOURCE_NAME_PREFIX"-test \
             /bin/bash -c "npm run test:coverage"
+            docker exec test-image /bin/sh -c "ls -lah"
+            docker cp test-image:/coverage ~/coverage
       - run:
           name: "Copy coverage files"
           command: |
-            docker exec test-image /bin/sh -c "ls -lah"
-            docker cp test-image:/coverage ~/coverage
             ls -lha ./coverage/
       - store_artifacts: # upload test coverage as artifact
           path: ./coverage/lcov.info
