@@ -13,13 +13,13 @@ jobs:
             --name test-image \
             -v ${PWD}/coverage:/coverage \
             "$AWS_RESOURCE_NAME_PREFIX"-test \
-            /bin/bash -c "npm run test:coverage"
+            /bin/bash -c "npm run test:coverage; ls -lah"
       - run:
           name: 'List directories'
           command: |
-              ls -lah
+              ls -lah ./coverage
       - store_artifacts:
-          path: ./coverage/lcov.info
+          path: ./coverage
 
 aws_job_template: &aws_job_template
   account-url: AWS_ECR_ACCOUNT_URL
