@@ -11,8 +11,7 @@ jobs:
             -tip 9000:9000 \
             --name test-image \
             -v ${PWD}/coverage:/coverage \
-            "$AWS_RESOURCE_NAME_PREFIX"-test \
-            /bin/bash -c "npm run test:coverage"
+            "$AWS_RESOURCE_NAME_PREFIX"-test
             docker exec test-image /bin/bash -c "ls -alh"
             # chmod 755 $(whoami):$(whoami) coverage
             # docker cp test-image:/coverage/ ./coverage/
