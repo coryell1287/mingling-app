@@ -8,11 +8,11 @@ jobs:
           command: |
             docker build -f shared/config/Dockerfile.dev -t "$AWS_RESOURCE_NAME_PREFIX"-test .
             docker run \
-            -tip 9000:9000 \
+            -ti \
             --name test-image \
-            -v ${PWD}/coverage:/coverage \
-            "$AWS_RESOURCE_NAME_PREFIX"-test
+            "$AWS_RESOURCE_NAME_PREFIX"-test 
             docker exec test-image /bin/bash -c "ls -alh"
+            # -v ${PWD}/coverage:/coverage \
             # chmod 755 $(whoami):$(whoami) coverage
             # docker cp test-image:/coverage/ ./coverage/
       - run:
