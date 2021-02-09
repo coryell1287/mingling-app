@@ -8,7 +8,9 @@ RUN npm install
 
 COPY . ./
 
+RUN npm run test:coverage
+
 EXPOSE 9000
 
-CMD [ "npm", "run", "test:coverage" ]
+CMD [ "npm", "start"]
 
