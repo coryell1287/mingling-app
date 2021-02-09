@@ -13,8 +13,9 @@ jobs:
             -v ${PWD}/coverage:/coverage \
             "$AWS_RESOURCE_NAME_PREFIX"-test \
             /bin/bash -c "npm run test:coverage"
-            chmod 755 $(whoami):$(whoami) coverage
-            docker cp test-image:/coverage/ ./coverage/
+            docker exec test-image /bin/bash -c "ls -alh"
+            # chmod 755 $(whoami):$(whoami) coverage
+            # docker cp test-image:/coverage/ ./coverage/
       - run:
           name: 'List directories'
           command: |
