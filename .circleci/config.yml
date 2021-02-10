@@ -8,10 +8,8 @@ jobs:
           command: |
             docker build -f shared/config/Dockerfile.dev -t "$AWS_RESOURCE_NAME_PREFIX"-test .
             docker run \
-            -ti \
             --name test-image \
             "$AWS_RESOURCE_NAME_PREFIX"-test \
-            /bin/bash -c "npm run test:coverage"
             docker exec test-image /bin/sh -c "ls -alh"
             # -v ${PWD}/coverage:/coverage \
             # chmod 755 $(whoami):$(whoami) coverage
