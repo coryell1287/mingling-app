@@ -6,19 +6,11 @@ jobs:
       - run:
           name: "Install packages"
           command: |
-            mkdir coverage
-            docker build -f shared/config/Dockerfile.dev -t "$AWS_RESOURCE_NAME_PREFIX"-test .
-            docker run \
-            --name test-image \
-            -v ${PWD}/coverage:/coverage \
-            "$AWS_RESOURCE_NAME_PREFIX"-test
-            # docker exec test-image /bin/sh -c "ls -alh"
-            # chown $(whoami):$(whoami) coverage
-            # docker cp test-image:/coverage/ ./coverage/
+            npm install
       - run:
-          name: 'List directories'
+          name: 'Run test'
           command: |
-              ls -lah ./coverage
+              npm run test:coverage
       - store_artifacts:
           path: ./coverage
 
