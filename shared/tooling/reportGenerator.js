@@ -1,21 +1,27 @@
-const reporter = require('cucumber-html-reporter');
-const { resolve } = require('path');
+const report = require('multiple-cucumber-html-reporter');
 
-const options = {
-  theme: 'bootstrap',
-  jsonDir: '../cypress/cucumberJson',
-  output: '../artifacts/cucumber_report.html',
-  reportSuiteAsScenarios: true,
-  scenarioTimestamp: true,
-  launchReport: true,
+report.generate({
+  jsonDir: '../cypress/cucumberJson/',
+  reportPath: '../cypress/',
   metadata: {
-    'App Version': '0.3.2',
-    'Test Environment': 'STAGING',
-    Browser: 'Chrome  54.0.2840.98',
-    Platform: 'Windows 10',
-    Parallel: 'Scenarios',
-    Executed: 'Remote',
+    browser: {
+      name: 'chrome',
+      version: '60',
+    },
+    device: 'Local test machine',
+    platform: {
+      name: 'ubuntu',
+      version: '16.04',
+    },
   },
-};
-
-reporter.generate(options);
+  customData: {
+    title: 'Run info',
+    data: [
+      { label: 'Project', value: 'Custom project' },
+      { label: 'Release', value: '1.2.3' },
+      { label: 'Cycle', value: 'B11221.34321' },
+      { label: 'Execution Start Time', value: 'Nov 19th 2017, 02:31 PM EST' },
+      { label: 'Execution End Time', value: 'Nov 19th 2017, 02:56 PM EST' },
+    ],
+  },
+});

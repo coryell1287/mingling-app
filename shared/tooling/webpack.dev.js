@@ -1,6 +1,5 @@
 const { merge } = require('webpack-merge');
 const webpack = require('webpack');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { resolve } = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
@@ -25,7 +24,6 @@ module.exports = merge(common, {
 
   plugins: [
     new CleanWebpackPlugin({ verbose: false }),
-    new BundleAnalyzerPlugin(),
     new webpack.HotModuleReplacementPlugin(),
   ],
 });

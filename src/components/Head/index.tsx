@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import Helmet from 'react-helmet';
-import { useLocation } from 'react-router-dom';
 
 export function Head(): ReactElement {
   return (

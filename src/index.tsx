@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { Home } from '@components/Home';
 import { Header } from '@components/Header';
 import { Head } from '@components/Head';
+import { Section } from '@components/Section';
 
 export function App(): React.ReactElement {
   return (
@@ -11,6 +12,9 @@ export function App(): React.ReactElement {
       <Head />
       <Header />
       <Home />
+      <Section>
+        <div>First Section</div>
+      </Section>
     </div>
   );
 }
