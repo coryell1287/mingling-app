@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { Home } from '@components/Home';
 import { Header } from '@components/Header';
 import { Head } from '@components/Head';
-import { Section } from '@components/Section';
+import { Section } from '@components/Layout/Section';
 
 export function App(): React.ReactElement {
   return (

@@ -10,6 +10,10 @@ jobs:
           command: |
             npm ci
       - run:
+          name: "Run package audit"
+          command: |
+            npx audit-ci -h -c
+      - run:
           name: "Check bundle size"
           command: |
             npm run build
