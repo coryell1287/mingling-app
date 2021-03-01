@@ -81,7 +81,7 @@ if (!self.define) {
     });
   };
 }
-define("./service-worker.js",['./workbox-87e1096a'], function (workbox) { 'use strict';
+define("./service-worker.js",['./workbox-52bcd24b'], function (workbox) { 'use strict';
 
   /**
   * Welcome to your Workbox-powered service worker!
@@ -104,7 +104,10 @@ define("./service-worker.js",['./workbox-87e1096a'], function (workbox) { 'use s
    */
 
   workbox.precacheAndRoute([{
-    "url": "app.5e8d3f63fa7693699490.js",
+    "url": "app.98ef0dc41a958dba4892.js",
+    "revision": null
+  }, {
+    "url": "app.b45b4b3414ac6f5928c6.hot-update.js",
     "revision": null
   }, {
     "url": "assets/icons/favicon.ico",
@@ -113,22 +116,19 @@ define("./service-worker.js",['./workbox-87e1096a'], function (workbox) { 'use s
     "url": "assets/images/plant.webp",
     "revision": "a38e17f9a3e0026d1d5448ff9a030a08"
   }, {
-    "url": "common-components_Home_index_tsx.aab3cc0acbc7fc625aae.hot-update.js",
-    "revision": null
-  }, {
-    "url": "common-components_Home_index_tsx.d31de0b76cae184cd76b.js",
-    "revision": null
+    "url": "index.html",
+    "revision": "d2017270e46423261e0ee0d05dc428b0"
   }, {
     "url": "manifest.webmanifest",
-    "revision": "5bae3c998fc87d2e617d9d93aa8bf6b6"
+    "revision": "3a4d438015b42b08aa26976193689e40"
   }, {
-    "url": "runtime.aab3cc0acbc7fc625aae.hot-update.js",
+    "url": "runtime.2191270620b8eec44853.js",
     "revision": null
   }, {
-    "url": "runtime.aab3cc0acbc7fc625aae.hot-update.json",
+    "url": "runtime.b45b4b3414ac6f5928c6.hot-update.js",
     "revision": null
   }, {
-    "url": "runtime.bd45ed95bde574bb859d.js",
+    "url": "runtime.b45b4b3414ac6f5928c6.hot-update.json",
     "revision": null
   }], {});
   workbox.registerRoute(/.(?:png|jpg|jpeg|svg)$/, new workbox.CacheFirst({
