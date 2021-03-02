@@ -1,12 +1,12 @@
 {
   "baseUrl": "http://localhost:9000",
   "testFiles": "**/*.{feature,features}",
-  "pluginsFile": "e2e/cypress/plugins/index.js",
-  "supportFile": "e2e/cypress/support/index.js",
+  "pluginsFile": "cypress/plugins/index.js",
+  "supportFile": "cypress/support/index.js",
   "experimentalComponentTesting": false,
   "viewportWidth": 1024,
   "viewportHeight": 800,
-  "fixturesFolder": "e2e/cypress/fixtures",
+  "fixturesFolder": "cypress/fixtures",
   "ignoreTestFiles": "*.js"
 }
 

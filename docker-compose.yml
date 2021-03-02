@@ -13,3 +13,15 @@ services:
       - 9000:9000
     environment:
       - CHOKIDAR_USEPOLLING=true
+  e2e:
+    image: cypress
+    build: ./e2e
+    container_name: cypress
+    depends_on:
+      - web
+    environment:
+      - CYPRESS_baseUrl=http://web
+    command: npx cypress run
+    volumes:
+      - ./e2e/cypress:/app/cypress
+      - ./e2e/cypress.json:/app/cypress.json
