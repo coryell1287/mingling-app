@@ -97,6 +97,17 @@ workflows:
           filters:
             branches:
               only: uat
+      -  cypress/run:
+          filters:
+            branches:
+              only: uat
+          no-workspace: false
+          record: true
+          start: 'npm start'
+          command: 'npm run test:features:all'
+          post-steps:
+            - store_test_results:
+                path: cypress/videos
       - aws-ecr/build-and-push-image:
           context: uat
           filters:
@@ -104,6 +115,7 @@ workflows:
               only: uat
           requires:
             - test
+            - cypress/run
           <<: *aws_job_template
       - aws-ecs/deploy-service-update:
           context: uat
@@ -127,7 +139,18 @@ workflows:
           context: production
           filters:
             branches:
-              only: production
+              only: master
+      -  cypress/run:
+          filters:
+            branches:
+              only: master
+          no-workspace: false
+          record: true
+          start: 'npm start'
+          command: 'npm run test:features:all'
+          post-steps:
+            - store_test_results:
+                path: cypress/videos
       - aws-ecr/build-and-push-image:
           context: production
           filters:
@@ -135,6 +158,7 @@ workflows:
               only: master
           requires:
             - test
+            - cypress/run
           <<: *aws_job_template
       - aws-ecs/deploy-service-update:
             context: production
@@ -144,7 +168,3 @@ workflows:
             requires:
               - request-approval
             <<: *service_template
-
-
-
-
