@@ -65,7 +65,6 @@ workflows:
           filters:
             branches:
               only: staging
-          name: Mochawesome report
           no-workspace: false
           record: true
           command: 'npm run test:features:all'
