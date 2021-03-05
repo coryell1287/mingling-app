@@ -21,19 +21,6 @@ jobs:
           name: "Run test coverage"
           command: |
               npm run test:coverage
-      - run:
-          name: Install Docker Compose
-          command: |
-            curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-            chmod +x ~/docker-compose
-            sudo mv ~/docker-compose /usr/local/bin/docker-compose
-      - run:
-          name: Start container and verify it is working
-          command: |
-            set -x
-            docker-compose up -d
-            docker run --network container:web \
-              appropriate/curl --retry 10 --retry-delay 1 --retry-connrefused http://localhost:9000/tests
       - store_artifacts:
           path: ./coverage
       - store_artifacts:
@@ -64,7 +51,7 @@ orbs:
   node: circleci/node@4.1.0
   aws-ecr: circleci/aws-ecr@6.15.2
   aws-ecs: circleci/aws-ecs@0.0.10
-  cypress: cypress-io/cypress@1
+  cypress: cypress-io/cypress@1.16.1
 version: 2.1
 workflows:
   staging_deploy:
@@ -74,6 +61,17 @@ workflows:
           filters:
             branches:
               only: staging
+      -  cypress/run:
+          filters:
+            branches:
+              only: staging
+          name: Mochawesome report
+          no-workspace: false
+          record: true
+          command: 'npm run test:features:all'
+          post-steps:
+            - store_test_results:
+                path: cypress/results
       - aws-ecr/build-and-push-image:
           context: staging
           filters:
@@ -81,6 +79,7 @@ workflows:
               only: staging
           requires:
             - test
+            - cypress/run
           <<: *aws_job_template
       - aws-ecs/deploy-service-update:
           context: staging
