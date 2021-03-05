@@ -31,7 +31,9 @@ jobs:
           name: Start container and verify it is working
           command: |
             set -x
-            docker-compose up --build
+            docker-compose up -d
+            docker run --network container:web \
+              appropriate/curl --retry 10 --retry-delay 1 --retry-connrefused http://localhost:9000/tests
       - store_artifacts:
           path: ./coverage
       - store_artifacts:
