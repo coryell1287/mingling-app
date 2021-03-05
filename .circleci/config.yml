@@ -67,6 +67,7 @@ workflows:
               only: staging
           no-workspace: false
           record: true
+          start: 'npm start'
           command: 'npm run test:features:all'
           post-steps:
             - store_test_results:
