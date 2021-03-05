@@ -1,17 +1,16 @@
 {
   "name": "e2e",
   "version": "1.0.0",
-  "description": "",
+  "description": "Cypress tests",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "type": "module",
   "keywords": [],
-  "author": "",
   "license": "ISC",
+  "private": true,
   "devDependencies": {
-    "cypress": "^6.6.0",
+    "cypress": "6.5.0",
     "cypress-audit": "^0.3.0",
     "cypress-cucumber-preprocessor": "^4.0.1"
   }

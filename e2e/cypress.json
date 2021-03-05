@@ -1,12 +1,7 @@
 {
-  "baseUrl": "http://localhost:9000",
-  "testFiles": "**/*.{feature,features}",
-  "pluginsFile": "cypress/plugins/index.js",
-  "supportFile": "cypress/support/index.js",
-  "experimentalComponentTesting": false,
-  "viewportWidth": 1024,
-  "viewportHeight": 800,
-  "fixturesFolder": "cypress/fixtures",
-  "ignoreTestFiles": "*.js"
+  "baseUrl": "http://localhost:8080",
+  "reporter": "junit",
+  "reporterOptions": {
+    "mochaFile": "cypress/results/output.xml"
+  }
 }
-

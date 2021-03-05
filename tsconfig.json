@@ -37,6 +37,6 @@
     "typeRoots": ["./src/@types", "node_modules/@types"]
   },
   "types": ["cypress"],
-  "include": ["./src/**/*", "./tests/**/*", "e2e/cypress/**/*"],
+  "include": ["./src/**/*", "./tests/**/*", "e2e2/cypress/**/*"],
   "exclude": ["./dist", "node_modules"]
 }

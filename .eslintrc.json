@@ -2,6 +2,7 @@
   "root": true,
   "parser": "@typescript-eslint/parser",
   "extends": [
+    "plugin:jest/all",
     "plugin:testing-library/recommended",
     "plugin:chai-friendly/recommended",
     "plugin:compat/recommended",
