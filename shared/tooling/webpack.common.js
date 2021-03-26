@@ -34,10 +34,14 @@ module.exports = {
     runtimeChunk: 'single',
     moduleIds: 'deterministic',
     splitChunks: {
+      chunks: 'all',
+      maxInitialRequests: Infinity,
+      minSize: 0,
       cacheGroups: {
         vendor: {
           name: 'vendors',
-          test: /[/]node_modules[/]/,
+          //make sure this is escaped
+          test: /[\\/]node_modules[\\/]/,
           chunks: 'all',
         },
       },
@@ -110,7 +114,7 @@ module.exports = {
       runtimeCaching: [
         {
           urlPattern: /.(?:png|jpg|jpeg|svg)$/,
-          handler: 'NetworkFirst',
+          handler: 'CacheFirst',
           options: {
             cacheName: 'images',
             expiration: {
@@ -130,3 +134,5 @@ module.exports = {
     }),
   ],
 };
+
+
