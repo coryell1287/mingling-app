@@ -7,6 +7,7 @@ interface CardProps {
   subtitle?: string;
   link?: string;
 }
+
 export const InfoCard = ({ title, text, subtitle, link }: CardProps): React.ReactElement => {
   return (
     <Card style={{ width: '18rem' }} data-testid="info-card">

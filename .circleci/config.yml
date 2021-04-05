@@ -10,9 +10,9 @@ jobs:
           command: |
             npm ci
       - run:
-          name: "Run package audit"
+          name: "Run all inspections"
           command: |
-            npx audit-ci -h -c
+            npm run inspect:all:ci
       - run:
           name: "Check bundle size"
           command: |
@@ -22,9 +22,11 @@ jobs:
           command: |
               npm run test:coverage
       - store_artifacts:
-          path: ./coverage
+          path: ./licenses
       - store_artifacts:
           path: ./bundleAnalyzer
+      - store_artifacts:
+          path: ./coverage
 
 aws_job_template: &aws_job_template
   account-url: AWS_ECR_ACCOUNT_URL
@@ -49,8 +51,8 @@ service_template: &service_template
 
 orbs:
   node: circleci/node@4.1.0
-  aws-ecr: circleci/aws-ecr@6.15.2
-  aws-ecs: circleci/aws-ecs@0.0.10
+  aws-ecr: circleci/aws-ecr@6.15.3
+  aws-ecs: circleci/aws-ecs@2.1.0
   cypress: cypress-io/cypress@1.16.1
 version: 2.1
 workflows:
