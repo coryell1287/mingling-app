@@ -81,7 +81,7 @@ workflows:
               only: staging
           requires:
             - test
-            - cypress/run
+            # - cypress/run
           <<: *aws_job_template
       - aws-ecs/deploy-service-update:
           context: staging
