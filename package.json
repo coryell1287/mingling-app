@@ -17,8 +17,7 @@
     "test": "$(npm bin)/jest --config ./shared/config/jest.json",
     "test:features:all": "cypress run --config-file ./shared/config/cypress.json --spec \"**/*.features\"",
     "test:coverage": "$(npm bin)/jest --config ./shared/config/jest.json --coverage",
-    "test:e2e:open": "$(npm bin)/cypress open --config-file ./shared/config/cypress.json",
-    "prepare": "husky install"
+    "test:e2e:open": "$(npm bin)/cypress open --config-file ./shared/config/cypress.json"
   },
   "repository": {
     "type": "git",

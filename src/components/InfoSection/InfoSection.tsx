@@ -12,9 +12,9 @@ export const InfoSection = (): React.ReactElement => {
       <Row className="justify-content-center">
         <Col md={5}>
           <CardDeck>
-            <InfoCard title="Interesting" text="Details for this" />
-            <InfoCard title="Interesting" text="Details for this" />
-            <InfoCard title="Interesting" text="Details for this" />
+            <InfoCard title="Interesting" text="Details for this" link="visit" />
+            <InfoCard title="Interesting" text="Details for this" link="click here" />
+            <InfoCard title="Interesting" text="Details for this" link="search" />
           </CardDeck>
         </Col>
       </Row>

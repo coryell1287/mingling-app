@@ -2,11 +2,11 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { ContactUs } from '@components/ContactUs';
+import { ContactForm } from '@components/ContactForm';
 
-describe('<Contact/>', function () {
+describe('<ContactForm />', function () {
   it('should type characters into input fields', function () {
-    const { getByTestId } = render(<ContactUs />);
+    const { getByTestId } = render(<ContactForm />);
     userEvent.type(getByTestId(/email/i), 'workmail@gmail.com');
     userEvent.type(getByTestId(/name/i), 'John Doe');
     userEvent.type(getByTestId(/textarea/i), 'hello there');
@@ -18,7 +18,7 @@ describe('<Contact/>', function () {
   });
 
   it('should submit form when button is clicked', function () {
-    const { getByTestId } = render(<ContactUs />);
+    const { getByTestId } = render(<ContactForm />);
     expect(getByTestId(/submit/i)).toBeInTheDocument();
   });
 });
