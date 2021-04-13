@@ -20,10 +20,8 @@ module.exports = merge(common, {
     compress: true,
     historyApiFallback: true,
     publicPath: '/',
+    https: true,
   },
 
-  plugins: [
-    new CleanWebpackPlugin({ verbose: false }),
-    new webpack.HotModuleReplacementPlugin(),
-  ],
+  plugins: [new CleanWebpackPlugin({ verbose: false }), new webpack.HotModuleReplacementPlugin()],
 });

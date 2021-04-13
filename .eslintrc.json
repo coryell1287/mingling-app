@@ -3,7 +3,6 @@
   "parser": "@typescript-eslint/parser",
   "extends": [
     "plugin:jest/all",
-    "plugin:testing-library/recommended",
     "plugin:chai-friendly/recommended",
     "plugin:compat/recommended",
     "plugin:@typescript-eslint/recommended",
@@ -32,6 +31,8 @@
     "@typescript-eslint/no-explicit-any": 1,
     "jest/prefer-expect-assertions": "off",
     "jest/no-hooks": "off",
+    "jest/no-disabled-tests": "off",
+    "jest/prefer-called-with": "off",
     "@typescript-eslint/no-inferrable-types": [
       "warn",
       {
