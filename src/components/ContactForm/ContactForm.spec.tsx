@@ -92,7 +92,7 @@ describe('<ContactForm />', function () {
   });
 
   describe('submits form when input is valid', () => {
-    it('should submit the form when fields are filled in properly', async () => {
+    it('should call the onSubmit function when fields are filled in properly', async () => {
       const onSubmit = jest.fn();
       const { getByPlaceholderText, getByLabelText, getByTestId } = render(<ContactForm onSubmit={onSubmit} />);
       const nameInput = getByPlaceholderText(/name/i);

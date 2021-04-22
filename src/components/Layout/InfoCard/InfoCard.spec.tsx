@@ -19,7 +19,7 @@ describe('<InfoCard/>', function () {
     expect.assertions(2);
   });
 
-  it('should load optional sections', async function () {
+  it('should load optional sections', function () {
     const { getByText, queryByTestId } = render(<InfoCard {...props} />);
     expect(getByText(/card subtitle/i)).toBeInTheDocument();
     expect(queryByTestId(/link/i)).toBeTruthy();

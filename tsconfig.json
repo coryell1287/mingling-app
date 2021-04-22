@@ -5,6 +5,7 @@
     "alwaysStrict": true,
     "baseUrl": ".",
     "checkJs": true,
+    "composite": true,
     "declaration": true,
     "declarationMap": true,
     "downlevelIteration": true,
@@ -38,5 +39,5 @@
   },
   "types": ["cypress", "./src/@types", "node_modules/@types", "jest", "@types/testing-library__jest-dom"],
   "include": ["./src/**/*", "cypress/**/*"],
-  "exclude": ["./dist", "**/node_modules", "**/.*/"]
+  "exclude": ["./dist", "**/node_modules", "**/.*/", "**/.(spec|test)*/"]
 }

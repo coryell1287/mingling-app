@@ -41,13 +41,13 @@ aws_job_template: &aws_job_template
   path: '.'
   skip-when-tags-exist: false
   attach-workspace: true
-  tag: $CIRCLE_BUILD_NUM
+  tag: $CIRCLE_WORKFLOW_ID
 
 service_template: &service_template
   family: ${AWS_RESOURCE_NAME_PREFIX}-task
   cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-cluster
   service-name: ${AWS_RESOURCE_NAME_PREFIX}-service
-  container-image-name-updates: container=${AWS_RESOURCE_NAME_PREFIX},tag=${CIRCLE_BUILD_NUM}
+  container-image-name-updates: container=${AWS_RESOURCE_NAME_PREFIX},tag=${CIRCLE_WORKFLOW_ID}
 
 orbs:
   node: circleci/node@4.1.0
