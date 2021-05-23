@@ -3,7 +3,6 @@
   "parser": "@typescript-eslint/parser",
   "extends": [
     "plugin:jest/all",
-    "plugin:chai-friendly/recommended",
     "plugin:compat/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:jsx-a11y/recommended",
@@ -11,7 +10,7 @@
     "plugin:import/errors",
     "plugin:import/warnings"
   ],
-  "plugins": ["cypress", "chai-friendly", "import", "@typescript-eslint", "react", "sonarjs", "prettier"],
+  "plugins": ["cypress", "import", "@typescript-eslint", "react", "sonarjs", "prettier"],
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module",
@@ -25,11 +24,10 @@
     "cypress/assertion-before-screenshot": "warn",
     "cypress/no-force": "warn",
     "cypress/no-async-tests": "error",
-    "no-unused-expressions": 0,
-    "chai-friendly/no-unused-expressions": 2,
+    "no-unused-expressions": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/no-explicit-any": 1,
-    "jest/prefer-expect-assertions": "off",
+    "@typescript-eslint/no-explicit-any": "error",
+    "jest/prefer-expect-assertions": "error",
     "jest/no-hooks": "off",
     "jest/no-disabled-tests": "off",
     "jest/prefer-called-with": "off",
@@ -60,7 +58,7 @@
           ["@components", "./src/components"],
           ["@assets", "./src/assets"]
         ],
-        "extensions": [".ts", ".tsx", ".json", ".ico"]
+        "extensions": [".js", ".ts", ".tsx", ".json", ".ico"]
       }
     }
   }

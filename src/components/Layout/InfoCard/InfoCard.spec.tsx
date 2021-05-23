@@ -11,22 +11,23 @@ const props = {
   link: 'card link',
 };
 
-describe('<InfoCard/>', function () {
-  it('should load a required sections', function () {
+describe('<InfoCard/>', () => {
+  it('should load a required sections', () => {
+    expect.assertions(2);
     const { getByText } = render(<InfoCard {...props} />);
     expect(getByText(/card text/i)).toBeInTheDocument();
     expect(getByText(/card title/i)).toBeInTheDocument();
-    expect.assertions(2);
   });
 
-  it('should load optional sections', function () {
+  it('should load optional sections', () => {
+    expect.assertions(2);
     const { getByText, queryByTestId } = render(<InfoCard {...props} />);
     expect(getByText(/card subtitle/i)).toBeInTheDocument();
     expect(queryByTestId(/link/i)).toBeTruthy();
-    expect.assertions(2);
   });
 
-  it('should not render link when link property is not present', function () {
+  it('should not render link when link property is not present', () => {
+    expect.assertions(1);
     const cardProps = {
       ...props,
       link: '',

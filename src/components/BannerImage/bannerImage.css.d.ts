@@ -2,9 +2,9 @@
 // Please do not change this file!
 interface CssExports {
   'bg-color': string;
-  'center': string;
-  'h1': string;
-  'jumbotron': string;
+  center: string;
+  h1: string;
+  jumbotron: string;
 }
 export const cssExports: CssExports;
 export default cssExports;

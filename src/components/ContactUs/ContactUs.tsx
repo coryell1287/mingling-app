@@ -5,7 +5,7 @@ import { ContactForm } from '@components/ContactForm';
 import type { FormInput } from '@components/ContactUs/types';
 
 const Popup = React.lazy(() => {
-  return import(/* webpackPrefetch: true*/ '../Layout/Popup/Popup');
+  return import(/* webpackPrefetch: true */ '../Layout/Popup/Popup');
 });
 
 export const ContactUs = (): React.ReactElement => {
@@ -31,7 +31,6 @@ export const ContactUs = (): React.ReactElement => {
 
   function handleOpen() {
     setOpen(true);
-    handleTimeout();
   }
 
   function handleSubmit(data: FormInput) {
@@ -44,7 +43,7 @@ export const ContactUs = (): React.ReactElement => {
   return (
     <Section>
       <ContactForm onSubmit={handleSubmit} />
-      <Suspense fallback={<div />}>
+      <Suspense fallback={<></>}>
         <Popup open={open} onHandleOpen={handleOpen} />
       </Suspense>
     </Section>

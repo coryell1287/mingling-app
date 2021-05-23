@@ -1,9 +1,11 @@
 import cypressCucumber from 'cypress-cucumber-preprocessor';
+import { startDevServer } from '@cypress/webpack-dev-server';
 import { lighthouse, pa11y, prepareAudit } from 'cypress-audit';
 
 const { default: cucumber } = cypressCucumber;
 
 export default (on, config) => {
+  on('dev-server:start', async options => startDevServer({ options }));
   on('file:preprocessor', cucumber());
   on('before:browser:launch', (browser = {}, launchOptions) => {
     prepareAudit(launchOptions);

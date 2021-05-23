@@ -91,6 +91,8 @@ module.exports = {
     ],
   },
   plugins: [
+    //Include the CSS extract plugin
+    //doing so will allow the CSS to load before the JavaScript bundle
     new CopyWebpackPlugin({
       patterns: [
         {
@@ -134,5 +136,3 @@ module.exports = {
     }),
   ],
 };
-
-

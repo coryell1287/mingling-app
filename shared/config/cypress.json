@@ -3,10 +3,9 @@
   "testFiles": "**/*.{feature,features}",
   "pluginsFile": "cypress/plugins/index.js",
   "supportFile": "cypress/support/index.js",
-  "experimentalComponentTesting": false,
-  "viewportWidth": 1024,
+  "viewportWidth": 1280,
   "viewportHeight": 800,
   "fixturesFolder": "cypress/fixtures",
-  "ignoreTestFiles": "*.js"
+  "ignoreTestFiles": "*.js",
+  "video": false
 }
-

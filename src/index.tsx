@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import { Home } from '@components/Home';
+import { BannerImage } from '@components/BannerImage';
 import { Header } from '@components/Header';
 import { Head } from '@components/Head';
 import { About } from '@components/About';
@@ -11,15 +12,19 @@ import { ContactUs } from '@components/ContactUs';
 
 export function App(): React.ReactElement {
   return (
-    <div>
-      <Head />
-      <Header />
-      <Home />
-      <About />
-      <Features />
-      <InfoSection />
-      <ContactUs />
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <Head />
+          <Header />
+          <BannerImage />
+          <About />
+          <Features />
+          <InfoSection />
+          <ContactUs />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
