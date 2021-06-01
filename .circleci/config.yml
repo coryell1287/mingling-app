@@ -9,10 +9,10 @@ jobs:
           name: "Install packages"
           command: |
             npm ci
-      - run:
-          name: "Run all inspections"
-          command: |
-            npm run inspect:all:ci
+      # - run:
+      #     name: "Run all inspections"
+      #     command: |
+      #       npm run inspect:all:ci
       - run:
           name: "Check bundle size"
           command: |
