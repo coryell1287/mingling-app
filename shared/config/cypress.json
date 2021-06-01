@@ -7,5 +7,6 @@
   "viewportHeight": 800,
   "fixturesFolder": "cypress/fixtures",
   "ignoreTestFiles": "*.js",
-  "video": false
+  "video": false,
+  "chromeWebSecurity": false
 }
