@@ -1,18 +1,15 @@
-import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps';
-
-const url = '/';
-
-Given('I am on the home page', () => {
-  cy.visit(url);
-  cy.title().should('include', 'Home');
-});
+import { Then, When } from 'cypress-cucumber-preprocessor/steps';
 
 When('I type a name into a the name field', () => {
-  cy.get('[placeholder="Enter name"]').clear().type('John Doe');
+  cy.findByPlaceholderText(/enter name/i)
+    .clear()
+    .type('John Doe');
 });
 
 When('I type an email into the email field', () => {
-  cy.get('[placeholder="Enter email"]').clear().type('john.doe@gmail.com');
+  cy.findByPlaceholderText(/enter email/i)
+    .clear()
+    .type('john.doe@gmail.com');
 });
 
 When('I type into the feedback field', () => {
@@ -20,9 +17,9 @@ When('I type into the feedback field', () => {
 });
 
 When('I press the submit button', () => {
-  cy.get('[aria-label="Contact form"]').submit();
+  cy.findByLabelText(/contact form/i).submit();
 });
 
-Then('popup should display the message "Feedback was submitted successfully."', () => {
-  cy.get('#modal').contains('Feedback was submitted successfully.');
+Then(`popup should display the message {string}`, message => {
+  cy.get('#modal').contains(message).should('be.visible');
 });

@@ -1,36 +1,41 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import { Header } from '@components/Header';
+import { Routes as App } from '@components/routes';
 
-let container: HTMLDivElement;
+type RouteProps = {
+  title?: string;
+  url?: string;
+};
+
+const renderWithRoutes = (App: React.ReactElement, { title = 'home', url = '/' }: RouteProps) => {
+  window.history.pushState({}, title, url);
+  return render(App, { wrapper: Router });
+};
 
 describe('<Header/>', () => {
-  beforeEach(() => {
-    container = document.createElement('div');
-    container.setAttribute('id', 'root');
-    document.body.appendChild(container);
-  });
-
-  afterEach(() => {
-    container.remove();
-  });
-
-  it('should load Header', () => {
-    expect.assertions(1);
-    const component = render(<Header />, { container });
-    expect(component).toBeTruthy();
-  });
-
   it('should contain Navbar', () => {
     expect.assertions(1);
-    const { getByRole } = render(<Header />, { container });
-    expect(getByRole('navigation')).toBeTruthy();
+    const { getByRole } = render(<App />, { wrapper: Router });
+    expect(getByRole('navigation')).toBeInTheDocument();
   });
 
-  it('should contain the Image wrapper', () => {
+  it('should render the Home page', () => {
     expect.assertions(1);
-    const { getAllByTestId } = render(<Header />);
-    expect(getAllByTestId('theme-button')).toBeTruthy();
+    const { getByText } = render(<App />, { wrapper: Router });
+    expect(getByText(/home page/gi)).toBeInTheDocument();
+  });
+
+  it('should render the About page', () => {
+    expect.assertions(1);
+    renderWithRoutes(<App />, { title: 'about', url: '/about' });
+    expect(screen.getByText(/about page/gi)).toBeInTheDocument();
+  });
+
+  it('should render the Contact page', () => {
+    expect.assertions(1);
+    renderWithRoutes(<App />, { title: 'contact', url: '/contact' });
+    expect(screen.getByText(/contact page/gi)).toBeInTheDocument();
   });
 });

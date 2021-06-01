@@ -7,7 +7,6 @@ export function Head(): ReactElement {
   const [title, setTitle] = React.useState('');
 
   React.useEffect(() => {
-    console.log(location, 'location');
     setTitle(function () {
       return location.pathname === '/' ? 'Home' : location.pathname.replace(/\b[a-z]/, c => c.toUpperCase());
     });

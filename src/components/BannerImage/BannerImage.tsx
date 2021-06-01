@@ -1,19 +1,27 @@
 import React from 'react';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Button from 'react-bootstrap/Button';
+import { useLocation } from 'react-router-dom';
 
 import classes from '@components/BannerImage/bannerImage.css';
 
+type Attr = 'home' | 'about' | 'contact';
+
 export function BannerImage(): React.ReactElement {
+  const [page, setPage] = React.useState<Attr>('home');
+  const { pathname } = useLocation();
+
+  React.useEffect(() => {
+    const path = pathname === '/' ? 'home' : (pathname.split('/').filter(Boolean)[0] as Attr);
+    setPage(path);
+  }, [pathname]);
+
   return (
     <>
-      <Jumbotron bsPrefix={classes.jumbotron}>
+      <Jumbotron bsPrefix={`${classes['image-container']} ${classes[page]}`}>
         <section className={classes.center}>
-          <h1 className={classes.h1}>Banner Image!</h1>
-          <p>
-            This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or
-            information.
-          </p>
+          <h1 className={classes.h1}>{page} page!</h1>
+          <p>Jumbotron for images</p>
           <p>
             <Button variant="primary">Learn more</Button>
           </p>
