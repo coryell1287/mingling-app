@@ -4,17 +4,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Header } from '@components/Header';
 
-// type RouteProps = {
-//   title?: string;
-//   url?: string;
-// };
-
-interface RoutesProps {
-  App: React.ReactElement;
-  title: string;
-  url: string;
-}
-
 function renderWithRoutes(App: React.ReactElement, title = 'home', url = '/') {
   window.history.pushState({}, title, url);
   return render(App, { wrapper: Router });
@@ -35,7 +24,7 @@ describe('<Header/>', () => {
         <App />
       </Suspense>,
     );
-    await waitFor(() => expect(getByText(/home page/gi)).toBeInTheDocument());
+    await waitFor(() => expect(getByText(/home page/gi)).toBeInTheDocument(), { timeout: 3000 });
   });
 
   it('should render the About page', async () => {
