@@ -8,7 +8,7 @@ import { Features } from '@components/Features';
 import { InfoSection } from '@components/InfoSection';
 import { ContactUs } from '@components/ContactUs';
 
-export const AboutPage = (): React.ReactElement => {
+export const HomePage = (): React.ReactElement => {
   return (
     <>
       <Head />
@@ -21,3 +21,5 @@ export const AboutPage = (): React.ReactElement => {
     </>
   );
 };
+
+export default HomePage;

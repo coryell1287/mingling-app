@@ -21,3 +21,5 @@ export const ContactPage = (): React.ReactElement => {
     </>
   );
 };
+
+export default ContactPage;

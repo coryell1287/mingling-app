@@ -14,9 +14,6 @@ module.exports = {
   context: resolve(__dirname, '../../src'),
   entry: {
     app: { import: './index.tsx' },
-    // home: {
-    //   import: './components/Home/index.tsx'
-    // },
   },
   resolve: {
     fallback: { path: require.resolve('path-browserify') },
@@ -39,10 +36,11 @@ module.exports = {
       minSize: 0,
       cacheGroups: {
         vendor: {
-          name: 'vendors',
-          //make sure this is escaped
           test: /[\\/]node_modules[\\/]/,
-          chunks: 'all',
+          name(module) {
+            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+            return `${packageName.replace('@', '')}`;
+          },
         },
       },
     },

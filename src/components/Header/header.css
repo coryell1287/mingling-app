@@ -12,3 +12,9 @@
   position: relative;
   width: 20px;
 }
+
+.navigation {
+  display: flex;
+  justify-content: space-evenly;
+  width: 20%;
+}

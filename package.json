@@ -5,20 +5,20 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --progress --config ./shared/tooling/webpack.prod.js",
-    "cy": "$(npm bin)/cypress open --config-file ./shared/config/cypress.json",
+    "cy": "cypress open --config-file ./shared/config/cypress.json",
     "cy:features": "cypress run --config-file ./shared/config/cypress.json --spec \"**/*.features\"",
     "cz": "cz",
     "inspect:all": "npm run inspect:updates && npm run inspect:audit",
     "inspect:all:ci": "npm run inspect:updates:ci && npm run inspect:license && npm run inspect:audit",
-    "inspect:audit": "$(npm bin)/audit-ci -h -c",
-    "inspect:license": "$(npm bin)/license-checker --production --json --out ./licenses/licenses.json --failOn GPLv2",
-    "inspect:updates": "$(npm bin)/ncu --doctor -u",
-    "inspect:updates:ci": "$(npm bin)/ncu -e 2",
+    "inspect:audit": "audit-ci -h -c",
+    "inspect:license": "license-checker --production --json --out ./licenses/licenses.json --failOn GPLv2",
+    "inspect:updates": "ncu --doctor -u",
+    "inspect:updates:ci": "ncu -e 2",
     "offline": "http-server dist",
-    "pwa:assets": "$(npm bin)/pwa-asset-generator -i ./src/index.html -m ./src/manifest.webmanifest",
+    "pwa:assets": "pwa-asset-generator -i ./src/index.html -m ./src/manifest.webmanifest",
     "start": "webpack serve --progress --config ./shared/tooling/webpack.dev.js",
-    "test": "$(npm bin)/jest --config ./shared/config/jest.json",
-    "test:coverage": "$(npm bin)/jest --config ./shared/config/jest.json --coverage"
+    "test": "jest --config ./shared/config/jest.json",
+    "test:coverage": "jest --config ./shared/config/jest.json --coverage"
   },
   "repository": {
     "type": "git",

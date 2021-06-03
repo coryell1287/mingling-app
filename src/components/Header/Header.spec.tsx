@@ -1,41 +1,66 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
+import React, { Suspense } from 'react';
+import { render, waitFor } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { Routes as App } from '@components/routes';
+import { Header } from '@components/Header';
 
-type RouteProps = {
-  title?: string;
-  url?: string;
-};
+// type RouteProps = {
+//   title?: string;
+//   url?: string;
+// };
 
-const renderWithRoutes = (App: React.ReactElement, { title = 'home', url = '/' }: RouteProps) => {
+interface RoutesProps {
+  App: React.ReactElement;
+  title: string;
+  url: string;
+}
+
+function renderWithRoutes(App: React.ReactElement, title = 'home', url = '/') {
   window.history.pushState({}, title, url);
   return render(App, { wrapper: Router });
-};
+}
 
 describe('<Header/>', () => {
   it('should contain Navbar', () => {
     expect.assertions(1);
-    const { getByRole } = render(<App />, { wrapper: Router });
+    const { getByRole } = render(<Header />, { wrapper: Router });
     expect(getByRole('navigation')).toBeInTheDocument();
   });
 
-  it('should render the Home page', () => {
+  it('should render the Home page', async () => {
     expect.assertions(1);
-    const { getByText } = render(<App />, { wrapper: Router });
-    expect(getByText(/home page/gi)).toBeInTheDocument();
+    const App = React.lazy(() => import('../routes'));
+    const { getByText } = renderWithRoutes(
+      <Suspense fallback={null}>
+        <App />
+      </Suspense>,
+    );
+    await waitFor(() => expect(getByText(/home page/gi)).toBeInTheDocument());
   });
 
-  it('should render the About page', () => {
+  it('should render the About page', async () => {
     expect.assertions(1);
-    renderWithRoutes(<App />, { title: 'about', url: '/about' });
-    expect(screen.getByText(/about page/gi)).toBeInTheDocument();
+    const App = React.lazy(() => import('../routes'));
+    const { getByText } = renderWithRoutes(
+      <Suspense fallback={null}>
+        <App />
+      </Suspense>,
+      'about',
+      '/about',
+    );
+    await waitFor(() => expect(getByText(/about page/gi)).toBeInTheDocument());
   });
 
-  it('should render the Contact page', () => {
+  it('should render the Contact page', async () => {
     expect.assertions(1);
-    renderWithRoutes(<App />, { title: 'contact', url: '/contact' });
-    expect(screen.getByText(/contact page/gi)).toBeInTheDocument();
+    const App = React.lazy(() => import('../routes'));
+    const { getByText } = renderWithRoutes(
+      <Suspense fallback={null}>
+        <App />
+      </Suspense>,
+      'contact',
+      '/contact',
+    );
+    await waitFor(() => expect(getByText(/contact page/gi)).toBeInTheDocument());
   });
 });
