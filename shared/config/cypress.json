@@ -1,12 +1,10 @@
 {
+  "$schema": "https://on.cypress.io/cypress.schema.json",
   "baseUrl": "http://localhost:9000",
-  "testFiles": "**/*.{feature,features}",
-  "pluginsFile": "cypress/plugins/index.js",
-  "supportFile": "cypress/support/index.js",
   "viewportWidth": 1280,
   "viewportHeight": 800,
   "fixturesFolder": "cypress/fixtures",
-  "ignoreTestFiles": "*.js",
+  "ignoreTestFiles": "*.ts",
   "video": false,
   "chromeWebSecurity": false
 }

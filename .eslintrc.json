@@ -10,7 +10,7 @@
     "plugin:import/errors",
     "plugin:import/warnings"
   ],
-  "plugins": ["cypress", "import", "@typescript-eslint", "react", "sonarjs", "prettier"],
+  "plugins": ["testing-library", "cypress", "import", "@typescript-eslint", "react", "sonarjs", "prettier"],
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module",
@@ -51,12 +51,22 @@
       }
     ]
   },
+  "overrides": [
+    {
+      "files": ["**/*.spec.js"],
+      "env": {
+        "jest": true
+      }
+    }
+  ],
   "settings": {
     "import/resolver": {
       "alias": {
         "map": [
+          ["@assets", "./src/assets"],
           ["@components", "./src/components"],
-          ["@assets", "./src/assets"]
+          ["@mocks/*", "./src/mocks/*"],
+          ["@styles", "./src/styles"]
         ],
         "extensions": [".js", ".ts", ".tsx", ".json", ".ico"]
       }

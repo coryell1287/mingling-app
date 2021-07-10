@@ -18,3 +18,10 @@
   justify-content: space-evenly;
   width: 20%;
 }
+.navigation a {
+  color: var(--text-color);
+}
+
+.padding {
+  padding: 18px;
+}

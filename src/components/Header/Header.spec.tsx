@@ -2,7 +2,9 @@ import React, { Suspense } from 'react';
 import { render, waitFor } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { Header } from '@components/Header';
+import { Header, saveThemeToStorage } from '@components/Header';
+
+import { MockStorage } from '../../mocks/MockStorage';
 
 function renderWithRoutes(App: React.ReactElement, title = 'home', url = '/') {
   window.history.pushState({}, title, url);
@@ -10,6 +12,16 @@ function renderWithRoutes(App: React.ReactElement, title = 'home', url = '/') {
 }
 
 describe('<Header/>', () => {
+  beforeAll(() => {
+    Object.defineProperty(window, 'localStorage', {
+      value: new MockStorage(),
+    });
+  });
+
+  afterEach(() => {
+    window.localStorage.clear();
+  });
+
   it('should contain Navbar', () => {
     expect.assertions(1);
     const { getByRole } = render(<Header />, { wrapper: Router });
@@ -51,5 +63,18 @@ describe('<Header/>', () => {
       '/contact',
     );
     await waitFor(() => expect(getByText(/contact page/gi)).toBeInTheDocument());
+  });
+
+  it('should set theme in localStorage to light-mode if localStorage property is undefined', () => {
+    expect.assertions(2);
+    expect(window.localStorage.getItem('theme')).toBeUndefined();
+    saveThemeToStorage('light-mode');
+    expect(window.localStorage.getItem('theme')).toBe('light-mode');
+  });
+
+  it('should set theme to dark-mode when saveThemeToStorage is called', () => {
+    expect.assertions(1);
+    saveThemeToStorage('dark-mode');
+    expect(window.localStorage.getItem('theme')).toBe('dark-mode');
   });
 });

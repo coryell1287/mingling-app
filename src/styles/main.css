@@ -1,0 +1,109 @@
+:root {
+  color-scheme: light dark;
+
+  --text-color: #222;
+  --background-color: #fff;
+}
+
+body {
+  background-color: var(--background-color);
+  background-color: 300ms;
+  color: var(--text-color);
+  transition: color 300ms;
+}
+
+body.dark-mode {
+  --text-color: #eee;
+  --background-color: #121212;
+  --card-background: #2b2e30;
+}
+
+body.light-mode {
+  --card-background: #fff;
+  --text-color: #222;
+  --background-color: #fff;
+}
+
+/* @media (prefers-color-scheme: dark) {
+}
+
+@media (prefers-color-scheme: light) {
+} */
+
+/* This example runs the media query (max-width: 600px) and  displays the
+value of the resulting MediaQueryList's matches property in a <span>;
+as a result, the output will say "true" if the viewport is less than or equal to
+ 600 pixels wide, and will say "false" if the window is wider than that.
+
+JavaScript
+let mql = window.matchMedia('(max-width: 600px)');
+
+document.querySelector(".mq-value").innerText = mql.matches; */
+
+/* var para = document.querySelector('p');
+var mql = window.matchMedia('(max-width: 600px)');
+
+function handleOrientationChange(event) {
+    if(event.matches) // landscape
+        …
+    else
+        …
+}
+var mql = matchMedia("(orientation:landscape)");
+mql.onchange = handleOrientationChange;
+
+/* window
+.getComputedStyle(document.documentElement)
+.getPropertyValue('prefers-color-scheme'); */
+
+/* const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+
+if (currentTheme) {
+    htmlEl.dataset.theme = currentTheme;
+}
+
+// When the user changes the theme, we need to save the new value on local storage
+const toggleTheme = (theme) => {
+    htmlEl.dataset.theme = theme;
+    localStorage.setItem('theme', theme);
+} */
+
+/* class CSSVariableApplicator extends Component {
+  componentDidMount() {
+    this.updateCSSVariables(this.props.variables);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.variables !== prevProps.variables) {
+      this.updateCSSVariables(this.props.variables);
+    }
+  }
+  updateCSSVariables(variables) {
+    forEach(variables, (value, prop) => {
+      document.documentElement.style.setProperty(prop, value));
+    });
+  }
+  render() {
+    return <div>{this.props.children}</div>;
+  }
+}
+As an implementation detail, we store our theme and handle updates with Redux, but here’s an example use without Redux…
+class App extends Component {
+  constructor(props) {
+    super(props);
+    const theme = {
+      '--theme-primary-color': '#8DC63F',
+      '--widget-color': '#333333',
+      '--dashboard-footer-text-color': '#FFFFFF',
+    };
+    this.state = { theme: theme };
+  }
+  render() {
+    return (
+      <div>
+        <CSSVariableApplicator variables={this.state.theme} />
+        {* the rest of the app *}
+      </div>
+    );
+  }
+} */

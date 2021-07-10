@@ -4,6 +4,7 @@ interface CssExports {
   circle1: string;
   circleBase: string;
   navigation: string;
+  padding: string;
 }
 export const cssExports: CssExports;
 export default cssExports;

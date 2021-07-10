@@ -1,6 +1,5 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import '@testing-library/cypress';
 import { BrowserRouter } from 'react-router-dom';
 
 import { BannerImage } from '@components/BannerImage';

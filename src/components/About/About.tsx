@@ -3,12 +3,13 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import { Section } from '@components/Layout/Section';
+import classes from '@components/About/about.css';
 
 export const About = (): React.ReactElement => {
   return (
     <Section>
       <Row className="justify-content-md-center">
-        <Col xs lg="5">
+        <Col className={`${classes.col} col-lg-5 col`} xs lg="5">
           <h3>About Us</h3>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum architecto quos exercitationem, sed mollitia, ipsum

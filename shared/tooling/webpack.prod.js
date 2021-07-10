@@ -1,5 +1,6 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
@@ -15,13 +16,14 @@ module.exports = merge(common, {
     maxAssetSize: 420 * 1024,
   },
   plugins: [
+    new CleanWebpackPlugin(),
+    new CompressionPlugin(),
     new webpack.ids.HashedModuleIdsPlugin({
       context: __dirname,
       hashFunction: 'sha256',
       hashDigest: 'hex',
       hashDigestLength: 20,
     }),
-    new CleanWebpackPlugin(),
     new WebpackManifestPlugin({
       seed: {
         name: 'Assets Manifest file',
@@ -30,6 +32,10 @@ module.exports = merge(common, {
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       reportFilename: '../bundleAnalyzer/bundleAnalyzer.html',
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production'),
+      MOCK_SERVICE_WORKER: JSON.stringify(false),
     }),
   ],
 });

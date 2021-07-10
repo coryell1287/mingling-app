@@ -1,0 +1,101 @@
+.switch_box {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  margin-top: 12px;
+  max-width: 200px;
+  min-width: 200px;
+}
+
+.theme-switch__input:checked ~ label {
+  --text: white;
+}
+
+.theme-switch__input,
+.theme-switch__label {
+  position: absolute;
+  z-index: 1;
+}
+
+.theme-switch__input {
+  opacity: 0;
+}
+
+.theme-switch__label {
+  background-color: slategray;
+  border-radius: 50px;
+  box-shadow: -4px 4px 15px inset rgba(0, 0, 0, 0.4);
+  height: 40px;
+  text-align: center;
+  transition: background-color 200ms ease-in-out;
+  width: 80px;
+}
+
+.theme-switch__label span::after {
+  background-color: lightblue;
+  border-radius: 50%;
+  box-shadow: -3px 3px 8px rgba(0, 0, 0, 0.4);
+  content: '';
+  height: 30px;
+  left: 5px;
+  position: absolute;
+  top: calc(100% + 15px);
+  transition: transform 200ms, background-color 200ms;
+  width: 30px;
+}
+
+.theme-switch__input:hover + .theme-switch__label,
+.theme-switch__input:focus + .theme-switch__label {
+  background-color: lightslategray;
+}
+
+.theme-switch__input:hover + .theme-switch__label span::after,
+.theme-switch__input:focus + .theme-switch__label span::after {
+  background-color: #d4ebf2;
+}
+
+.theme-switch__label::before,
+.theme-switch__label::after {
+  font-size: 2rem;
+  position: absolute;
+  top: 50%;
+  transform: translate3d(0, -50%, 0);
+}
+
+.theme-switch__label::before {
+  color: orange;
+  content: '☼';
+  margin-right: 10px;
+  right: 100%;
+}
+
+.theme-switch__label::after {
+  color: lightslategray;
+  content: '☾';
+  left: 100%;
+  margin-left: 10px;
+}
+
+.theme-switch__label span {
+  bottom: calc(100% + 10px);
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.theme-switch__input:checked ~ .theme-switch__label {
+  background-color: lightslategray;
+}
+
+.theme-switch__input:checked ~ .theme-switch__label::before {
+  color: lightslategray;
+}
+
+.theme-switch__input:checked ~ .theme-switch__label::after {
+  color: turquoise;
+}
+
+.theme-switch__input:checked ~ .theme-switch__label span::after {
+  transform: translate3d(40px, 0, 0);
+}

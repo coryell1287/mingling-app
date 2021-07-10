@@ -17,14 +17,17 @@
     "isolatedModules": true,
     "jsx": "react",
     "lib": ["WebWorker", "dom", "dom.iterable", "esnext"],
-    "module": "ES2020",
+    "module": "esnext",
     "moduleResolution": "node",
+    "noEmit": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
     "outDir": "dist",
     "paths": {
+      "@assets/*": ["./src/assets/*"],
       "@components/*": ["./src/components/*"],
-      "@assets/*": ["./src/assets/*"]
+      "@mocks/*": ["./src/mocks/*"],
+      "@styles/*": ["./src/styles/*"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
@@ -37,7 +40,7 @@
     "target": "es5",
     "typeRoots": ["./src/@types", "node_modules/@types"]
   },
-  "types": ["cypress", "./src/@types", "node_modules/@types", "jest", "@types/testing-library__jest-dom"],
-  "include": ["./src/**/*", "cypress/**/*"],
-  "exclude": ["./dist", "**/node_modules", "**/.*/", "**/.(spec|test)*/"]
+  "exclude": ["./dist", "**/node_modules", "**/.*/", "**/.(spec|test)*/"],
+  "include": ["./src/**/*", "src/reportVitals.ts"],
+  "types": ["./src/@types", "node_modules/@types", "jest"]
 }

@@ -14,3 +14,8 @@
   margin-top: 0.25rem;
   width: 100%;
 }
+
+.col {
+  background-color: var(--card-background) !important;
+  padding: 25px;
+}

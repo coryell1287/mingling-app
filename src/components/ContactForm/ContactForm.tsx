@@ -31,7 +31,7 @@ export const ContactForm = ({ onSubmit }: Props): React.ReactElement => {
 
   return (
     <Row className="justify-content-center">
-      <Col md={5}>
+      <Col className={`${classes.col} col-md-5`} md={5}>
         <Form aria-label="Contact form" data-testid="form" noValidate onSubmit={handleSubmit(onSubmit)} autoComplete="off">
           <Form.Group controlId="contactFormName">
             <Form.Label>Name</Form.Label>
