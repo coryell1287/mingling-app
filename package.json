@@ -16,9 +16,8 @@
     "inspect:updates": "ncu --doctor -u",
     "inspect:updates:ci": "ncu -e 2",
     "offline": "http-server dist",
-    "pwa:assets": "pwa-asset-generator -i ./src/index.html -m ./src/manifest.webmanifest",
     "start": "webpack serve --progress --config ./shared/tooling/webpack.dev.js",
-    "start:mock:env": "webpack serve --progress --env=mock --config  ./shared/tooling/webpack.dev.js",
+    "start:mock:env": "webpack serve --progress --env=mock --config ./shared/tooling/webpack.dev.js",
     "test": "jest --config ./shared/config/jest.json",
     "test:coverage": "jest --config ./shared/config/jest.json --coverage"
   },

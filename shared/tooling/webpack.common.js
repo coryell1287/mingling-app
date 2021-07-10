@@ -1,8 +1,6 @@
 const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
-const ImageminWebP = require('imagemin-webp');
-const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const postcssPresetEnv = require('postcss-preset-env');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
@@ -133,9 +131,6 @@ module.exports = {
       template: 'index.html',
       chunks: ['vendors', 'app'],
       chunksSortMode: 'manual',
-    }),
-    new ImageminPlugin({
-      plugins: [ImageminWebP({ quality: 50 })],
     }),
     new webpack.DefinePlugin({
       MOCK_SERVICE_WORKER: JSON.stringify(false),
