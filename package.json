@@ -142,6 +142,7 @@
     "lint-staged": "^11.0.0",
     "msw": "^0.31.0",
     "npm-check-updates": "^11.8.2",
+    "path-browserify": "^1.0.1",
     "postcss-loader": "^6.1.1",
     "postcss-preset-env": "^6.7.0",
     "prettier": "^2.3.2",
