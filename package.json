@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --progress --config ./shared/tooling/webpack.prod.js",
-    "cy:audit": "cypress run --config-file ./shared/config/cypress-audit.json --spec cypress/integration/audit/audit.spec.ts --headless --browser chrome",
+    "cy:audit": "cypress run --config-file ./shared/config/cypress-audit.json --spec cypress/integration/audit/audit.spec.ts",
     "cy:features": "cypress run --config-file ./shared/config/cypress.json --spec \"**/*.features\"",
     "cy:open": "cypress open --config-file ./shared/config/cypress.json",
     "cz": "cz",
