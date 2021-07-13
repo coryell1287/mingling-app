@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react';
+import axios from 'axios';
 
 import { Section } from '@components/Layout/Section';
 import { ContactForm } from '@components/ContactForm';
@@ -12,13 +13,13 @@ export const ContactUs = (): React.ReactElement => {
   const [open, setOpen] = React.useState(false);
   let timeout: ReturnType<typeof setTimeout> | undefined;
 
-  React.useEffect(() => {
-    return () => {
-      if (timeout) {
-        clearTimeout(timeout);
-      }
-    };
-  });
+  async function submitFeedback(data: FormInput): Promise<void> {
+    await axios.post('/feedback', JSON.stringify(data));
+    try {
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
 
   function handleTimeout() {
     timeout = setTimeout(() => {
@@ -35,6 +36,7 @@ export const ContactUs = (): React.ReactElement => {
 
   function handleSubmit(data: FormInput) {
     if (data) {
+      submitFeedback(data);
       setOpen(true);
       handleTimeout();
     }

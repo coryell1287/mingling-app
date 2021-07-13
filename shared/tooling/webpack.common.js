@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const postcssPresetEnv = require('postcss-preset-env');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { GenerateSW } = require('workbox-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
@@ -111,6 +112,23 @@ module.exports = {
     // new TsconfigPathsPlugin({
     //   configFile: '/home/coryell/Development/microApps/mingling-app/mingling-app_client/tsconfig.json',
     // }),
+    new GenerateSW({
+      skipWaiting: true,
+      clientsClaim: true,
+      exclude: [/.(?:png|jpg|jpeg|svg)$/],
+      runtimeCaching: [
+        {
+          urlPattern: /.(?:png|jpg|jpeg|svg)$/,
+          handler: 'CacheFirst',
+          options: {
+            cacheName: 'images',
+            expiration: {
+              maxEntries: 10,
+            },
+          },
+        },
+      ],
+    }),
     new CopyWebpackPlugin({
       patterns: [
         {
@@ -131,9 +149,6 @@ module.exports = {
       template: 'index.html',
       chunks: ['vendors', 'app'],
       chunksSortMode: 'manual',
-    }),
-    new webpack.DefinePlugin({
-      MOCK_SERVICE_WORKER: JSON.stringify(false),
     }),
   ],
 };

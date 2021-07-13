@@ -29,7 +29,7 @@ module.exports = merge(common, {
     new CleanWebpackPlugin({ verbose: false }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      MOCK_SERVICE_WORKER: mock ? JSON.stringify(true) : JSON.stringify(false),
+      MOCK_SERVICE_WORKER: !mock ? JSON.stringify(true) : JSON.stringify(false),
     }),
   ],
 });
