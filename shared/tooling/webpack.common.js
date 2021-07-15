@@ -1,8 +1,6 @@
 const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
 const postcssPresetEnv = require('postcss-preset-env');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { GenerateSW } = require('workbox-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
@@ -126,26 +124,6 @@ module.exports = {
               maxEntries: 10,
             },
           },
-        },
-      ],
-    }),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: '../src/assets/images',
-          to: './assets/images',
-        },
-        {
-          from: '../src/assets/icons',
-          to: './assets/icons',
-        },
-        {
-          from: '../src/manifest.webmanifest',
-          to: './',
-        },
-        {
-          from: '../public/mockServiceWorker.js',
-          to: './',
         },
       ],
     }),
