@@ -14,7 +14,7 @@ export const ContactUs = (): React.ReactElement => {
   let timeout: ReturnType<typeof setTimeout> | undefined;
 
   async function submitFeedback(data: FormInput): Promise<void> {
-    await axios.post('/feedback', JSON.stringify(data));
+    await axios.post('http://0.0.0.0:9000/feedback', JSON.stringify(data));
     try {
     } catch (error) {
       throw new Error(error);

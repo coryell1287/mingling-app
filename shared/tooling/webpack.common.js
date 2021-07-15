@@ -143,6 +143,10 @@ module.exports = {
           from: '../src/manifest.webmanifest',
           to: './',
         },
+        {
+          from: '../public/mockServiceWorker.js',
+          to: './',
+        },
       ],
     }),
     new HtmlWebpackPlugin({

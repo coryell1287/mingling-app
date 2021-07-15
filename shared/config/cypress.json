@@ -1,6 +1,6 @@
 {
   "$schema": "https://on.cypress.io/cypress.schema.json",
-  "baseUrl": "http://localhost:9000",
+  "baseUrl": "http://0.0.0.0:9000",
   "viewportWidth": 1280,
   "viewportHeight": 800,
   "fixturesFolder": "cypress/fixtures",
