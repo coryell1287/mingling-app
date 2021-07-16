@@ -1,11 +1,11 @@
 import { When, Then } from 'cypress-cucumber-preprocessor/steps';
 
-When('I click on the About link, I navigate to the About page', () => {
+When('I click on the About link, I should navigate to the About page', () => {
   cy.get('[href="/about"]').click();
   cy.title().should('include', 'About');
 });
 
-When('I click on Contact link, I navigate to the Contact page', () => {
+When('I click on Contact link, I should navigate to the Contact page', () => {
   cy.get('[href="/contact"]').click();
   cy.title().should('include', 'Contact');
 });

@@ -73,17 +73,8 @@ workflows:
               only: staging
           no-workspace: false
           record: true
-          start: 'npm run start:mock:env'
+          start: 'npm run start'
           command: 'npm run cy:features'
-      -  cypress/run:
-          name: UI audit
-          filters:
-            branches:
-              only: staging
-          no-workspace: false
-          record: true
-          start: 'npm run start:mock:env'
-          command: 'npm run cy:audit'
       - aws-ecr/build-and-push-image:
           context: staging
           filters:
@@ -92,7 +83,6 @@ workflows:
           requires:
             - unit test
             - e2e test
-            - UI audit
           <<: *aws_job_template
       - aws-ecs/deploy-service-update:
           context: staging
@@ -118,17 +108,8 @@ workflows:
               only: uat
           no-workspace: false
           record: true
-          start: 'npm run start:mock:env'
+          start: 'npm run start'
           command: 'npm run cy:features'
-      -  cypress/run:
-          name: UI audit
-          filters:
-            branches:
-              only: uat
-          no-workspace: false
-          record: true
-          start: 'npm run start:mock:env'
-          command: 'npm run cy:audit'
       - aws-ecr/build-and-push-image:
           context: uat
           filters:
@@ -137,7 +118,6 @@ workflows:
           requires:
             - unit test
             - e2e test
-            - UI audit
           <<: *aws_job_template
       - aws-ecs/deploy-service-update:
           context: uat
@@ -170,17 +150,8 @@ workflows:
               only: master
           no-workspace: false
           record: true
-          start: 'npm run start:mock:env'
+          start: 'npm run start'
           command: 'npm run cy:features'
-      -  cypress/run:
-          name: UI audit
-          filters:
-            branches:
-              only: master
-          no-workspace: false
-          record: true
-          start: 'npm run start:mock:env'
-          command: 'npm run cy:audit'
       - aws-ecr/build-and-push-image:
           context: production
           filters:
@@ -189,7 +160,6 @@ workflows:
           requires:
             - unit test
             - e2e test
-            - UI audit
           <<: *aws_job_template
       - aws-ecs/deploy-service-update:
             context: production

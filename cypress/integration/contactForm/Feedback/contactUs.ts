@@ -16,10 +16,10 @@ When('I type into the feedback field', () => {
   cy.get('#textArea').clear().type('I really enjoyed the experience.');
 });
 
-When('I press the submit button', () => {
-  cy.findByLabelText(/contact form/i).submit();
-});
+// When('I press the submit button', () => {
+//   // cy.findByLabelText(/contact form/i).submit();
+// });
 
-Then(`popup should display the message {string}`, message => {
-  cy.get('#modal').contains(message).should('be.visible');
-});
+// Then(`popup should display the message {string}`, message => {
+//   cy.get('#modal').contains(message).should('be.visible');
+// });
