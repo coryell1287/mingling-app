@@ -28,7 +28,7 @@ export default (on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions): 
     prepareAudit(launchOptions);
   });
 
-  const dirPath = './AuditReport';
+  const dirPath = './auditReport';
   /**
    * After the raw json is created, drop into the lighthouse viewer
    * https://googlechrome.github.io/lighthouse/viewer/
