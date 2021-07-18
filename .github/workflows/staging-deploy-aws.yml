@@ -33,7 +33,7 @@ jobs:
     - name: Wait for AWS configuration
       uses: lewagon/wait-on-check-action@v0.2
       with:
-          ref: ${{ on.push.branches }}
+          ref: staging
           check-name: 'Login to Amazon ECR'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
@@ -54,7 +54,7 @@ jobs:
     - name: Wait for image to build and push
       uses: lewagon/wait-on-check-action@v0.2
       with:
-          ref: ${{ on.push.branches }} 
+          ref: staging
           check-name: 'Build, tag, and push image to Amazon ECR'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
@@ -70,7 +70,7 @@ jobs:
     - name: Wait for new image ID in task definition
       uses: lewagon/wait-on-check-action@v0.2
       with:
-          ref: ${{ on.push.branches }} 
+          ref: staging
           check-name: 'Fill in the new image ID in the Amazon ECS task definition'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
