@@ -13,6 +13,7 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           build: npm run build
+          config-file: shared/config/cypress.json
 
       # - name: Save bundleAnalyzer folder
       #   uses: actions/upload-artifact@v2

@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
-import axios from 'axios';
 
+import { useTimeout } from '@components/ContactUs/useTimeout';
 import { Section } from '@components/Layout/Section';
 import { ContactForm } from '@components/ContactForm';
 import type { FormInput } from '@components/ContactUs/types';
@@ -10,35 +10,17 @@ const Popup = React.lazy(() => {
 });
 
 export const ContactUs = (): React.ReactElement => {
-  const [open, setOpen] = React.useState(false);
-  let timeout: ReturnType<typeof setTimeout> | undefined;
+  // const [open, setOpen] = React.useState(false);
+  const { open, setOpen, handleTimeOut } = useTimeout();
 
-  async function submitFeedback(data: FormInput): Promise<void> {
-    await axios.post('http://0.0.0.0:9000/feedback', JSON.stringify(data));
-    try {
-    } catch (error) {
-      throw new Error(error);
-    }
-  }
-
-  function handleTimeout() {
-    timeout = setTimeout(() => {
-      setOpen(false);
-      if (timeout) {
-        clearTimeout(timeout);
-      }
-    }, 5000);
-  }
-
-  function handleOpen() {
+  function handleOpen(): void {
     setOpen(true);
   }
 
-  function handleSubmit(data: FormInput) {
+  function handleSubmit(data: FormInput): void {
     if (data) {
-      submitFeedback(data);
       setOpen(true);
-      handleTimeout();
+      handleTimeOut(false);
     }
   }
 

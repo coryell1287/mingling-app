@@ -1,6 +1,7 @@
 import React from 'react';
 import { screen, render, fireEvent } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
+import userEvent from '@testing-library/user-event';
 
 import { updateTheme } from '@components/ThemeSwitcher/updateTheme';
 import { saveThemeToStorage } from '@components/Header';
@@ -13,6 +14,10 @@ describe('<ThemeSwitcher />', () => {
     Object.defineProperty(window, 'localStorage', {
       value: new MockStorage(),
     });
+  });
+
+  beforeEach(() => {
+    jest.resetAllMocks();
   });
 
   afterEach(() => {
@@ -32,6 +37,17 @@ describe('<ThemeSwitcher />', () => {
     expect(result.current).toBeNull();
   });
 
+  it('should call useStorage and return theme when theme is not set', () => {
+    expect.assertions(2);
+    saveThemeToStorage('dark-mode');
+    const { result: first } = renderHook(() => useStorage('theme'));
+    expect(first.current).toBe('dark-mode');
+
+    saveThemeToStorage('light-mode');
+    const { result: second } = renderHook(() => useStorage('theme'));
+    expect(second.current).toBe('light-mode');
+  });
+
   it('should toggle checkbox when user clicks, setting theme to dark', () => {
     expect.assertions(2);
     const event = { target: { dataset: { mode: 'light-mode' } } };
@@ -46,7 +62,7 @@ describe('<ThemeSwitcher />', () => {
     const container = document.querySelector('[data-checkbox]');
 
     if (container) {
-      fireEvent.click(container);
+      userEvent.click(container);
     }
 
     expect(handleCheck).toHaveBeenCalledTimes(1);
@@ -67,7 +83,7 @@ describe('<ThemeSwitcher />', () => {
     const container = document.querySelector('[data-checkbox]');
 
     if (container) {
-      fireEvent.click(container);
+      userEvent.click(container);
     }
 
     expect(handleCheck).toHaveBeenCalledTimes(1);
