@@ -30,6 +30,7 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           command: npm run test:coverage
+          config-file: shared/config/cypress.json
 
       # - name: Save coverage folder
       #   uses: actions/upload-artifact@v2
