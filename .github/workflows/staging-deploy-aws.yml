@@ -54,7 +54,7 @@ jobs:
       with:
         task-definition: task-definition.json
         container-name: $ECR_REPOSITORY
-        image: ${{ steps.build-image.outputs.image }}
+        image: 999289053399.dkr.ecr.us-east-2.amazonaws.com/mingling-staging:latest
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
