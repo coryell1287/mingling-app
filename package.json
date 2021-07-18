@@ -8,7 +8,7 @@
     "cy:features": "cypress run --config-file ./shared/config/cypress.json --spec \"**/*.features\"",
     "cy:open": "cypress open --config-file ./shared/config/cypress.json",
     "cz": "cz",
-    "init:mock": "npm msw init dist --no-save",
+    "init:mock": "npm msw init public --no-save",
     "inspect:all": "npm run inspect:updates && npm run inspect:audit",
     "inspect:audit": "audit-ci -h -c",
     "inspect:all:ci": "npm run inspect:updates:ci && npm run inspect:license && npm run inspect:audit",
