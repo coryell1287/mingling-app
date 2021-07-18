@@ -1,10 +1,15 @@
+name: Deploy to Amazon ECS
+
 on:
   workflow_run:
     workflows: ['Cypress Tests']
     types:
       - completed
-
-name: Deploy to Amazon ECS
+  push:
+    branches:
+      - staging
+      - master
+      - uat
 
 jobs:
   deploy:
@@ -27,14 +32,6 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Wait for AWS configuration
-      uses: lewagon/wait-on-check-action@v0.2
-      with:
-          ref: ${{ github.event.push.head.sha || github.sha }}
-          check-name: 'Login to Amazon ECR'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
-
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
       env:
@@ -48,13 +45,10 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
-    - name: Wait for image to build and push
-      uses: lewagon/wait-on-check-action@v0.2
-      with:
-          ref: ${{ github.event.push.head.sha || github.sha }}
-          check-name: 'Build, tag, and push image to Amazon ECR'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
+    - name: Download task definition
+      run: |
+        aws ecs describe-task-definition --task-definition service \
+        --query taskDefinition > task-definition.json
 
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
@@ -64,18 +58,10 @@ jobs:
         container-name: $ECR_REPOSITORY
         image: ${{ steps.build-image.outputs.image }}
 
-    - name: Wait for new image ID in task definition
-      uses: lewagon/wait-on-check-action@v0.2
-      with:
-          ref: ${{ github.event.push.head.sha || github.sha }}
-          check-name: 'Fill in the new image ID in the Amazon ECS task definition'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
-
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
         service: ${ECR_REPOSITORY}-service
-        cluster: default
+        cluster: ${ECR_REPOSITORY}-cluster
         wait-for-service-stability: true
