@@ -28,7 +28,7 @@ jobs:
       - store_artifacts:
           path: ./coverage
       - store_artifacts:
-          path: ./AuditReport
+          path: ./auditReport
 
 aws_job_template: &aws_job_template
   account-url: AWS_ECR_ACCOUNT_URL
