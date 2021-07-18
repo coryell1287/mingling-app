@@ -44,7 +44,7 @@ jobs:
         # docker build -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG} .
         # docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}
         # echo "::set-output name=image::${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}"
-        docker build -t 999289053399.dkr.ecr.us-east-2.amazonaws.com/mingling-staging:latest
+        docker build -t 999289053399.dkr.ecr.us-east-2.amazonaws.com/mingling-staging:latest .
         docker push 999289053399.dkr.ecr.us-east-2.amazonaws.com/mingling-staging:latest
         echo "::set-out name=image::999289053399.dkr.ecr.us-east-2.amazonaws.com/mingling-staging:latest"
 
