@@ -1,6 +1,6 @@
 on:
   workflow_run:
-    workflows: ['build', 'E2E on Firefox', 'E2E on Chrome', 'E2E on Edge']
+    workflows: ['Cypress Tests']
     types:
       - completed
   push:
