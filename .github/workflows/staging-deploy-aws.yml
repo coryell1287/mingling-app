@@ -52,7 +52,7 @@ jobs:
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: ./taskDefinitions/mingling-staging-task.json
+        task-definition: /taskDefinitions/mingling-staging-task.json
         container-name: $ECR_REPOSITORY
         image: 999289053399.dkr.ecr.us-east-2.amazonaws.com/mingling-staging:latest
 
