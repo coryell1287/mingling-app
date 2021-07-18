@@ -44,7 +44,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: cypress-io/github-action@v2
+      - uses: cypress-io/github-action@v2.2.7
         with:
           install-command: npm ci
           start: npm start
@@ -69,7 +69,7 @@ jobs:
     name: E2E on Firefox
     steps:
       - uses: actions/checkout@v2
-      - uses: cypress-io/github-action@v2
+      - uses: cypress-io/github-action@v2.2.7
         with:
           install-command: npm ci
           start: npm start
@@ -91,7 +91,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: cypress-io/github-action@v2
+      - uses: cypress-io/github-action@v2.2.7
         with:
           install-command: npm ci
           start-windows: npm run start:windows:server
