@@ -66,7 +66,6 @@ jobs:
     name: E2E on Firefox
     container:
       image: cypress/browsers:node12.16.1-chrome80-ff73
-      options: --user 1001 --shm-size=2g
 
     steps:
       - uses: actions/checkout@v2
@@ -77,6 +76,7 @@ jobs:
           browser: firefox
           headless: true
           config-file: shared/config/cypress.json
+
 
       # - name: Upload audit report
       # - uses: actions/upload-artifact@v1
