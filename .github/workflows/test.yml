@@ -63,11 +63,11 @@ jobs:
 
   firefox:
     runs-on: ubuntu-latest
+    name: E2E on Firefox
     container:
       image: cypress/browsers:node12.16.1-chrome80-ff73
-      options: --user 1001
+      options: --user 1001 --shm-size=2g
 
-    name: E2E on Firefox
     steps:
       - uses: actions/checkout@v2
       - uses: cypress-io/github-action@v2
@@ -86,14 +86,14 @@ jobs:
       #     path: auditReport
 
   edge:
-    runs-on: windows-latest
     name: E2E on Edge
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v2
       - uses: cypress-io/github-action@v2
         with:
-          start-windows: npm run start:windows:server
+          start: npm start
           command: npm run cy:features
           browser: edge
           headless: true
