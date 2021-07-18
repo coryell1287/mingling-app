@@ -64,8 +64,8 @@ jobs:
   firefox:
     runs-on: ubuntu-latest
     name: E2E on Firefox
-    container:
-      image: cypress/browsers:node14.17.0-chrome80-ff73
+    # container:
+    #   image: cypress/browsers
 
     steps:
       - uses: actions/checkout@v2
