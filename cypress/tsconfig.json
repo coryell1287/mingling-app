@@ -2,7 +2,8 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "noEmit": true,
+    "typeRoots": ["../src/types"],
     "types": ["cypress", "@types/testing-library__cypress"]
   },
-  "include": ["../node_modules/cypress", "./**/*.ts", "./**/?(*.)+(spec|test).+(ts|tsx|js)"]
+  "include": ["../node_modules/cypress", "./**/*.ts", "./**/?(*.)+(spec|test).+(ts|tsx|js)", "report.js"]
 }

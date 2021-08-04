@@ -1,13 +1,11 @@
-const { resolve } = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const postcssPresetEnv = require('postcss-preset-env');
-const { GenerateSW } = require('workbox-webpack-plugin');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+import { resolve } from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import postcssPresetEnv from 'postcss-preset-env';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import webpack from 'webpack';
 
-module.exports = {
+const config: webpack.Configuration = {
   target: 'web',
-  profile: true,
   stats: {
     children: false,
   },
@@ -19,10 +17,8 @@ module.exports = {
     fallback: { path: require.resolve('path-browserify') },
     extensions: ['.tsx', '.ts', '.js', '.css', '.json', '.ico'],
     alias: {
-      '@assets': resolve(__dirname, '../../src/assets'),
       '@components': resolve(__dirname, '../../src/components'),
-      '@types': resolve(__dirname, '../../src/types'),
-      '@styles': resolve(__dirname, '../../src/styles'),
+      '@assets': resolve(__dirname, '../../src/assets'),
     },
   },
   output: {
@@ -51,16 +47,7 @@ module.exports = {
     rules: [
       {
         test: /.tsx?$/,
-        use: [
-          {
-            loader: 'ts-loader',
-            options: {
-              transpileOnly: true,
-              // context: resolve(__dirname, '../..'),
-              // configFile: require.resolve('../../tsconfig.json'),
-            },
-          },
-        ],
+        use: [{ loader: 'ts-loader', options: { transpileOnly: true } }],
         exclude: /node_modules/,
       },
       {
@@ -102,28 +89,19 @@ module.exports = {
   plugins: [
     //Include the CSS extract plugin
     //doing so will allow the CSS to load before the JavaScript bundle
-    // new ForkTsCheckerWebpackPlugin({
-    //   eslint: {
-    //     files: '../../src/**/*.{ts,tsx,js,jsx}',
-    //   },
-    // }),
-    // new TsconfigPathsPlugin({
-    //   configFile: '/home/coryell/Development/microApps/mingling-app/mingling-app_client/tsconfig.json',
-    // }),
-    new GenerateSW({
-      skipWaiting: true,
-      clientsClaim: true,
-      exclude: [/.(?:png|jpg|jpeg|svg)$/],
-      runtimeCaching: [
+    new CopyWebpackPlugin({
+      patterns: [
         {
-          urlPattern: /.(?:png|jpg|jpeg|svg)$/,
-          handler: 'CacheFirst',
-          options: {
-            cacheName: 'images',
-            expiration: {
-              maxEntries: 10,
-            },
-          },
+          from: '../src/assets/images',
+          to: './assets/images',
+        },
+        {
+          from: '../src/assets/icons',
+          to: './assets/icons',
+        },
+        {
+          from: '../src/manifest.webmanifest',
+          to: './',
         },
       ],
     }),
@@ -132,5 +110,10 @@ module.exports = {
       chunks: ['vendors', 'app'],
       chunksSortMode: 'manual',
     }),
+    new webpack.DefinePlugin({
+      MOCK_SERVICE_WORKER: JSON.stringify(false),
+    }),
   ],
 };
+
+export default config;

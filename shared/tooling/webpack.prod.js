@@ -48,7 +48,7 @@ module.exports = merge(common, {
     }),
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
-      reportFilename: '../bundleAnalyzer/bundleAnalyzer.html',
+      reportFilename: '../bundle-analyzer/bundle-analyzer.html',
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),

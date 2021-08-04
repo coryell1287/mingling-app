@@ -1,10 +1,12 @@
 import React from 'react';
 
-export const useTimeout = (): {
+interface UseTimeout {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   handleTimeOut: (bool: boolean) => void;
-} => {
+}
+
+export const useTimeout = (): UseTimeout => {
   const [open, setOpen] = React.useState(false);
 
   function handleTimeOut(bool: boolean) {

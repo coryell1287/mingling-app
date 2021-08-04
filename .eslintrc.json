@@ -65,7 +65,7 @@
         "map": [
           ["@assets", "./src/assets"],
           ["@components", "./src/components"],
-          ["@mocks/*", "./src/mocks/*"],
+          ["@types/*", "./src/types/*"],
           ["@styles", "./src/styles"]
         ],
         "extensions": [".js", ".ts", ".tsx", ".json", ".ico"]

@@ -6,7 +6,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import classes from '@components/ContactForm/contactForm.css';
-import type { FormInput } from '@components/ContactUs/types';
 
 type Props = {
   onSubmit(data: FormInput): void;
