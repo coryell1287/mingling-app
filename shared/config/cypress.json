@@ -1,5 +1,10 @@
 {
-  "baseUrl": "http://localhost:3000",
-  "testFiles": "**/*.feature",
-  "experimentalComponentTesting": true
+  "$schema": "https://on.cypress.io/cypress.schema.json",
+  "baseUrl": "http://0.0.0.0:9000",
+  "viewportWidth": 1280,
+  "viewportHeight": 800,
+  "fixturesFolder": "cypress/fixtures",
+  "ignoreTestFiles": "*.ts",
+  "video": false,
+  "chromeWebSecurity": false
 }

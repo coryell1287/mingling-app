@@ -2,3 +2,4 @@ dist/
 build/
 coverage/
 shared/tooling
+*.css.d.ts

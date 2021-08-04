@@ -1,0 +1,8 @@
+.card {
+  background-color: var(--card-background);
+  color: var(--text-color);
+}
+
+.cardLink {
+  color: var(--button-color) !important;
+}

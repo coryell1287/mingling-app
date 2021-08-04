@@ -2,7 +2,7 @@
   "root": true,
   "parser": "@typescript-eslint/parser",
   "extends": [
-    "plugin:chai-friendly/recommended",
+    "plugin:jest/all",
     "plugin:compat/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:jsx-a11y/recommended",
@@ -10,14 +10,7 @@
     "plugin:import/errors",
     "plugin:import/warnings"
   ],
-  "plugins": [
-    "cypress",
-    "chai-friendly",
-    "import",
-    "@typescript-eslint",
-    "sonarjs",
-    "prettier"
-  ],
+  "plugins": ["testing-library", "cypress", "import", "@typescript-eslint", "react", "sonarjs", "prettier"],
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module",
@@ -31,10 +24,13 @@
     "cypress/assertion-before-screenshot": "warn",
     "cypress/no-force": "warn",
     "cypress/no-async-tests": "error",
-    "no-unused-expressions": 0,
-    "chai-friendly/no-unused-expressions": 2,
+    "no-unused-expressions": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/no-explicit-any": 1,
+    "@typescript-eslint/no-explicit-any": "error",
+    "jest/prefer-expect-assertions": "error",
+    "jest/no-hooks": "off",
+    "jest/no-disabled-tests": "off",
+    "jest/prefer-called-with": "off",
     "@typescript-eslint/no-inferrable-types": [
       "warn",
       {
@@ -50,28 +46,30 @@
     "import/order": [
       "error",
       {
-        "groups": [
-          "builtin",
-          "external",
-          "internal",
-          "parent",
-          "sibling",
-          "index",
-          "unknown"
-        ],
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index", "unknown"],
         "newlines-between": "always"
       }
     ]
   },
+  "overrides": [
+    {
+      "files": ["**/*.spec.js"],
+      "env": {
+        "jest": true
+      }
+    }
+  ],
   "settings": {
     "import/resolver": {
       "alias": {
         "map": [
+          ["@assets", "./src/assets"],
           ["@components", "./src/components"],
-          ["@resources", "./src/resources"]
+          ["@types/*", "./src/types/*"],
+          ["@styles", "./src/styles"]
         ],
-        "extensions": [".ts", ".tsx", ".json"]
+        "extensions": [".js", ".ts", ".tsx", ".json", ".ico"]
       }
     }
   }
-}    
+}

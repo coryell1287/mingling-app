@@ -1,0 +1,27 @@
+.circleBase {
+  border-radius: 50%;
+}
+
+.circle1 {
+  background-color: #4bc475;
+  border: 1px solid #000;
+  bottom: 3px;
+  cursor: pointer;
+  height: 20px;
+  left: 5px;
+  position: relative;
+  width: 20px;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-evenly;
+  width: 20%;
+}
+.navigation a {
+  color: var(--text-color);
+}
+
+.padding {
+  padding: 18px;
+}

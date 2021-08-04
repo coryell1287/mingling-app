@@ -1,0 +1,108 @@
+name: Cypress Tests
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v2
+
+      - name: Install and build UI
+        uses: cypress-io/github-action@v2
+        with:
+          runTests: false
+          build: npm run build
+          config-file: shared/config/cypress.json
+
+      # - name: Save bundleAnalyzer folder
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     if-no-files-found: error
+      #     path: bundleAnalyzer
+
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v2
+
+      - name: Install
+        uses: cypress-io/github-action@v2
+        with:
+          command: npm run test:coverage
+          config-file: shared/config/cypress.json
+
+      # - name: Save coverage folder
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     if-no-files-found: error
+      #     path: coverage
+
+  chrome:
+    runs-on: ubuntu-latest
+    name: E2E on Chrome
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: cypress-io/github-action@v2
+        with:
+          start: npm start
+          command: npm run cy:features
+          browser: chrome
+          headless: true
+          config-file: shared/config/cypress.json
+
+      # - name: Upload audit report
+      # - uses: actions/upload-artifact@v1
+      #   if: always()
+      #   with:
+      #     name: auditReport
+      #     path: auditReport
+
+  firefox:
+    runs-on: ubuntu-latest
+    name: E2E on Firefox
+    # container:
+    #   image: cypress/browsers
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: cypress-io/github-action@v2
+        with:
+          start: npm start
+          command: npm run cy:features
+          browser: firefox
+          headless: true
+          config-file: shared/config/cypress.json
+
+
+      # - name: Upload audit report
+      # - uses: actions/upload-artifact@v1
+      #   if: always()
+      #   with:
+      #     name: auditReport
+      #     path: auditReport
+
+  edge:
+    name: E2E on Edge
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: cypress-io/github-action@v2
+        with:
+          start: npm start
+          command: npm run cy:features
+          browser: edge
+          headless: true
+          config-file: shared/config/cypress.json
+
+      # - name: Upload audit report
+      # - uses: actions/upload-artifact@v1
+      #   if: always()
+      #   with:
+      #     name: auditReport
+      #     path: auditReport
+

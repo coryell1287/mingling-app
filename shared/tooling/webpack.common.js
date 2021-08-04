@@ -1,30 +1,28 @@
 const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WorkboxPlugin = require('workbox-webpack-plugin');
-const ImageminWebP = require('imagemin-webp');
-const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const postcssPresetEnv = require('postcss-preset-env');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { GenerateSW } = require('workbox-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
   target: 'web',
+  profile: true,
   stats: {
     children: false,
   },
   context: resolve(__dirname, '../../src'),
   entry: {
     app: { import: './index.tsx' },
-    // home: {
-    //   import: './components/Home/index.tsx'
-    // },
   },
   resolve: {
     fallback: { path: require.resolve('path-browserify') },
     extensions: ['.tsx', '.ts', '.js', '.css', '.json', '.ico'],
     alias: {
-      '@components': resolve(__dirname, '../../src/components'),
-      '@shared': resolve(__dirname, '../../src/components/config'),
       '@assets': resolve(__dirname, '../../src/assets'),
+      '@components': resolve(__dirname, '../../src/components'),
+      '@types': resolve(__dirname, '../../src/types'),
+      '@styles': resolve(__dirname, '../../src/styles'),
     },
   },
   output: {
@@ -35,16 +33,16 @@ module.exports = {
     runtimeChunk: 'single',
     moduleIds: 'deterministic',
     splitChunks: {
+      chunks: 'all',
+      maxInitialRequests: Infinity,
+      minSize: 0,
       cacheGroups: {
         vendor: {
-          name: 'vendors',
-          test: /[/]node_modules[/]/,
-          chunks: 'all',
-        },
-        common: {
-          test: /[/]src[/]components[/]/,
-          chunks: 'all',
-          minSize: 0,
+          test: /[\\/]node_modules[\\/]/,
+          name(module) {
+            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+            return `${packageName.replace('@', '')}`;
+          },
         },
       },
     },
@@ -53,7 +51,16 @@ module.exports = {
     rules: [
       {
         test: /.tsx?$/,
-        use: [{ loader: 'ts-loader', options: { transpileOnly: true } }],
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true,
+              // context: resolve(__dirname, '../..'),
+              // configFile: require.resolve('../../tsconfig.json'),
+            },
+          },
+        ],
         exclude: /node_modules/,
       },
       {
@@ -93,23 +100,17 @@ module.exports = {
     ],
   },
   plugins: [
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: '../shared/assets/images',
-          to: './assets/images',
-        },
-        {
-          from: '../shared/assets/icons',
-          to: './assets/icons',
-        },
-        {
-          from: '../src/manifest.webmanifest',
-          to: './',
-        },
-      ],
-    }),
-    new WorkboxPlugin.GenerateSW({
+    //Include the CSS extract plugin
+    //doing so will allow the CSS to load before the JavaScript bundle
+    // new ForkTsCheckerWebpackPlugin({
+    //   eslint: {
+    //     files: '../../src/**/*.{ts,tsx,js,jsx}',
+    //   },
+    // }),
+    // new TsconfigPathsPlugin({
+    //   configFile: '/home/coryell/Development/microApps/mingling-app/mingling-app_client/tsconfig.json',
+    // }),
+    new GenerateSW({
       skipWaiting: true,
       clientsClaim: true,
       exclude: [/.(?:png|jpg|jpeg|svg)$/],
@@ -128,12 +129,8 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: 'index.html',
-      chunks: ['vendors', 'common', 'app'],
+      chunks: ['vendors', 'app'],
       chunksSortMode: 'manual',
-    }),
-    new ImageminPlugin({
-      plugins: [ImageminWebP({ quality: 50 })],
     }),
   ],
 };
-

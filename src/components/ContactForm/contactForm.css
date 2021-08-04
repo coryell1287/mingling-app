@@ -1,0 +1,21 @@
+.validated {
+  color: #dc3545;
+  display: block;
+  font-size: 80%;
+  height: 8px;
+  margin-top: 0.25rem;
+  width: 100%;
+}
+
+.notValidated {
+  display: block;
+  font-size: 80%;
+  height: 8px;
+  margin-top: 0.25rem;
+  width: 100%;
+}
+
+.col {
+  background-color: var(--card-background) !important;
+  padding: 25px;
+}
