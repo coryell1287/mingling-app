@@ -18,8 +18,7 @@ describe('<ContactForm />', function () {
         fireEvent.change(nameInput, { target: { value } });
         fireEvent.submit(getByLabelText(/form/i));
       });
-      /* eslint-disable @typescript-eslint/no-non-null-assertion */
-      expect(container.querySelector('[data-validate=validate-name]')!.innerHTML).toMatch(
+      expect((container.querySelector('[data-validate=validate-name]') as HTMLSpanElement).innerHTML).toMatch(
         'Maximum number of characters exceeded.',
       );
     });
@@ -32,7 +31,9 @@ describe('<ContactForm />', function () {
       await act(async () => {
         fireEvent.submit(getByLabelText(/form/i));
       });
-      expect(container.querySelector('[data-validate=validate-name]')!.innerHTML).toMatch('Name is required');
+      expect((container.querySelector('[data-validate=validate-name]') as HTMLSpanElement).innerHTML).toMatch(
+        'Name is required',
+      );
     });
   });
 
@@ -47,7 +48,9 @@ describe('<ContactForm />', function () {
         fireEvent.change(emailInput, { target: { value: 'mail' } });
         fireEvent.submit(getByLabelText(/form/i));
       });
-      expect(container.querySelector('[data-validate=validate-email]')!.innerHTML).toMatch('Please enter a valid email.');
+      expect((container.querySelector('[data-validate=validate-email]') as HTMLSpanElement).innerHTML).toMatch(
+        'Please enter a valid email.',
+      );
     });
 
     it('should display error message when email field is empty', async () => {
@@ -58,7 +61,9 @@ describe('<ContactForm />', function () {
       await act(async () => {
         fireEvent.submit(getByLabelText(/form/i));
       });
-      expect(container.querySelector('[data-validate=validate-email]')!.innerHTML).toMatch('Email is required');
+      expect((container.querySelector('[data-validate=validate-email]') as HTMLSpanElement).innerHTML).toMatch(
+        'Email is required',
+      );
     });
   });
 
@@ -74,7 +79,7 @@ describe('<ContactForm />', function () {
         fireEvent.change(textAreaInput, { target: { value } });
         fireEvent.submit(getByLabelText(/form/i));
       });
-      expect(container.querySelector('[data-validate=validate-textarea]')!.innerHTML).toMatch(
+      expect((container.querySelector('[data-validate=validate-textarea]') as HTMLSpanElement).innerHTML).toMatch(
         'Maximum number of characters exceeded.',
       );
     });
@@ -87,7 +92,9 @@ describe('<ContactForm />', function () {
       await act(async () => {
         fireEvent.submit(getByLabelText(/form/i));
       });
-      expect(container.querySelector('[data-validate=validate-textarea]')!.innerHTML).toMatch('Feedback is required.');
+      expect((container.querySelector('[data-validate=validate-textarea]') as HTMLSpanElement).innerHTML).toMatch(
+        'Feedback is required.',
+      );
     });
   });
 

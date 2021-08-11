@@ -1,44 +1,45 @@
 import React from 'react';
-import { render, fireEvent, act as call } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
-import { act } from 'react-dom/test-utils';
+import { render } from '@testing-library/react';
+import { renderHook, act as rhAct } from '@testing-library/react-hooks';
 
 import { ContactUs } from '@components/ContactUs';
-import { useTimeout } from '@components/ContactUs/useTimeout';
+import { useModal } from '@components/ContactUs/useModal';
 
 describe('<ContactUs/>', () => {
-  afterEach(() => {
-    jest.useRealTimers();
-  });
-
   it('should load the ContactUs component', () => {
     expect.assertions(1);
     const { queryByLabelText } = render(<ContactUs />);
 
     expect(queryByLabelText(/contact form/i)).toBeInTheDocument();
   });
+});
 
-  it('should submit form', async () => {
-    expect.assertions(1);
-    const { queryByLabelText } = render(<ContactUs />);
-    const form = queryByLabelText(/contact form/i);
+describe('useModal', () => {
+  it('should submit the feedback form', async () => {
+    expect.assertions(5);
+    const { result } = renderHook(useModal);
+    const setOpen = jest.spyOn(result.current, 'setOpen');
+    const handleSubmit = jest.spyOn(result.current, 'handleSubmit');
 
-    if (form) {
-      await act(async () => {
-        fireEvent.submit(form, { name: 'John', email: 'john@mail.com', feedback: 'it works' });
-      });
-    }
-    expect(queryByLabelText(/contact form/i)).toBeInTheDocument();
+    rhAct(() => {
+      result.current.handleSubmit({ name: 'Carl' });
+      result.current.setOpen(true);
+    });
+    expect(handleSubmit).toHaveBeenCalledTimes(1);
+    expect(handleSubmit).toHaveBeenCalledWith({ name: 'Carl' });
+    expect(setOpen).toHaveBeenCalledTimes(1);
+    expect(setOpen).toHaveBeenCalledWith(true);
+    expect(open).toBeTruthy();
   });
 
-  it('should call handleTimeOut() and setOpen, setting open to false', async () => {
+  it('should setOpen to false after 5000', async () => {
     expect.assertions(1);
+    const { result } = renderHook(useModal);
     jest.useFakeTimers();
-    const { result } = renderHook(() => useTimeout());
-    call(() => {
-      result.current.handleTimeOut(false);
+
+    rhAct(() => {
+      result.current.setOpen(true);
       jest.runAllTimers();
-      result.current.setOpen(false);
     });
 
     expect(result.current.open).toBeFalsy();

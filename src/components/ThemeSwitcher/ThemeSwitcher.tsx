@@ -1,20 +1,14 @@
-import React from 'react';
+import React, { ChangeEvent, ReactElement } from 'react';
 
 import { updateTheme } from '@components/ThemeSwitcher/updateTheme';
 import classes from '@components/ThemeSwitcher/themeSwitcher.css';
 
-export interface AppTheme {
-  mode: string | null;
-}
-
 type Props = {
-  onHandleCheck: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onHandleCheck: (event: ChangeEvent<HTMLInputElement>) => void;
   mode: Theme;
 };
 
-type Theme = 'light-mode' | 'dark-mode';
-
-export const ThemeSwitcher = ({ onHandleCheck, mode }: Props): React.ReactElement => {
+export const ThemeSwitcher = ({ onHandleCheck, mode }: Props): ReactElement => {
   React.useEffect(() => {
     updateTheme(mode as Theme);
   }, [mode]);

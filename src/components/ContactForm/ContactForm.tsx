@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -21,7 +21,7 @@ function renderWhenValidated(condition: boolean | undefined) {
   return condition ? classes.validated : classes.notValidated;
 }
 
-export const ContactForm = ({ onSubmit }: Props): React.ReactElement => {
+export const ContactForm = ({ onSubmit }: Props): ReactElement => {
   const {
     handleSubmit,
     control,

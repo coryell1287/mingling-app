@@ -1,21 +1,14 @@
-import React from 'react';
+import React, { ChangeEvent, ReactElement, useState } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 
 import { ThemeSwitcher } from '@components/ThemeSwitcher';
 import classes from '@components/Header/header.css';
 import { useStorage } from '@components/ThemeSwitcher/useStorage';
+import { saveThemeToStorage } from '@components/Header/headerUtility';
 
-type Theme = 'light-mode' | 'dark-mode';
-
-export const saveThemeToStorage = (value: Theme): void => {
-  if (value) {
-    localStorage.setItem('theme', value);
-  }
-};
-
-export function Header(): React.ReactElement {
-  const [mode, setMode] = React.useState<Theme>();
+export function Header(): ReactElement {
+  const [mode, setMode] = useState<Theme>();
   const theme = useStorage('theme');
 
   React.useEffect(() => {
@@ -26,9 +19,9 @@ export function Header(): React.ReactElement {
       setMode(theme as Theme);
       saveThemeToStorage(theme as Theme);
     }
-  }, [theme]);
+  }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const mode = e.target.dataset.mode;
     if (mode === 'light-mode') {
       saveThemeToStorage('dark-mode');

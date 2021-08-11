@@ -13,3 +13,9 @@ interface FormInput {
   email: string;
   textarea: string;
 }
+
+interface AppTheme {
+  mode: string | null;
+}
+
+type Theme = 'light-mode' | 'dark-mode';

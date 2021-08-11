@@ -4,7 +4,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import userEvent from '@testing-library/user-event';
 
 import { updateTheme } from '@components/ThemeSwitcher/updateTheme';
-import { saveThemeToStorage } from '@components/Header';
+import * as headerUtility from '@components/Header/headerUtility';
 import { ThemeSwitcher, useStorage } from '@components/ThemeSwitcher';
 
 import { MockStorage } from '../../mocks/MockStorage';
@@ -39,11 +39,11 @@ describe('<ThemeSwitcher />', () => {
 
   it('should call useStorage and return theme when theme is not set', () => {
     expect.assertions(2);
-    saveThemeToStorage('dark-mode');
+    headerUtility.saveThemeToStorage('dark-mode');
     const { result: first } = renderHook(() => useStorage('theme'));
     expect(first.current).toBe('dark-mode');
 
-    saveThemeToStorage('light-mode');
+    headerUtility.saveThemeToStorage('light-mode');
     const { result: second } = renderHook(() => useStorage('theme'));
     expect(second.current).toBe('light-mode');
   });
@@ -54,7 +54,7 @@ describe('<ThemeSwitcher />', () => {
 
     const handleCheck = jest.fn(() => {
       if (event.target.dataset.mode === 'light-mode') {
-        saveThemeToStorage('dark-mode');
+        headerUtility.saveThemeToStorage('dark-mode');
       }
     });
 
@@ -75,7 +75,7 @@ describe('<ThemeSwitcher />', () => {
 
     const handleCheck = jest.fn(() => {
       if (event.target.dataset.mode === 'dark-mode') {
-        saveThemeToStorage('light-mode');
+        headerUtility.saveThemeToStorage('light-mode');
       }
     });
 
